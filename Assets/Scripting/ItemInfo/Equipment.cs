@@ -1,11 +1,15 @@
-// 2. Equipment 정의 (원재료 필요)
-
 using System.Collections.Generic;
 
 public class Equipment : Item
 {
     public string Id { get; protected set; }
     public string Name { get; protected set; }
-    public int stage { get; protected set; }
-    public Dictionary<string, int> Recipe { get; } // 재료 ID, 개수
+    public bool Rareness { get; protected set; }
+
+    public int Stage { get; protected set; }
+
+    // 제작에 필요한 재료
+    public virtual Dictionary<string, int> Recipe { get; protected set; }
+        = new Dictionary<string, int>();
+    
 }

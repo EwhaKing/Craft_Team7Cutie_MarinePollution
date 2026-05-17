@@ -17,17 +17,6 @@ public class MaterialItem : Item
         Rareness = rareness;
     }
     
-    Item IronPiece = new MaterialItem("1", "철 조각", false);
-    Item Rope = new MaterialItem("2", "밧줄", false);
-    Item WoodPiece = new MaterialItem("3","나무조각", false);
-    Item MechanicalPiece = new MaterialItem("4", "기계 부품", false);
-    Item CopperLine = new MaterialItem("5", "구리선", false);
-    Item Cloth = new MaterialItem("6", "천 조각", false);
-    Item RubberPiece = new MaterialItem("7", "고무 조각", false);
-    Item GlassPiece = new MaterialItem("8", "유리 조각", false);
-    Item BatteryPiece = new MaterialItem("9", "배터리", false);
-    Item CoralPiece = new MaterialItem("10", "산호 조각", true);
-    Item CleanWater = new MaterialItem("11","정화수", false);
-    Item Bubble = new MaterialItem("12", "공기방울", true);
+    
 }
 
