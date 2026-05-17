@@ -11,5 +11,6 @@ public class Equipment : Item
     // 제작에 필요한 재료
     public virtual Dictionary<string, int> Recipe { get; protected set; }
         = new Dictionary<string, int>();
-    
+
+
 }
