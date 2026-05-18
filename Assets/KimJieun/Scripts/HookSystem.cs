@@ -140,12 +140,6 @@ public class HookSystem : MonoBehaviour
         ReturnHook();
     }
 
-    void ReturnHook()
-    {
-        hook.SetActive(false);
-        currentState = HookState.Idle;
-    }
-
     void ReturnHookToArm()
     {
         hook.transform.position = Vector2.MoveTowards(
@@ -158,6 +152,12 @@ public class HookSystem : MonoBehaviour
         {
             ReturnHook();
         }
+    }
+
+    void ReturnHook()
+    {
+        hook.SetActive(false);
+        currentState = HookState.Idle;
     }
 
     void UpdateRope()
