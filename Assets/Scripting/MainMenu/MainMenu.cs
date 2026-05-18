@@ -1,5 +1,5 @@
 using UnityEngine;
-// using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
     public void OnClickStart()
     {
         // Start 버튼 클릭 시 씬 이동
-        // SceneManager.LoadScene("__Scene");
+        SceneManager.LoadScene("Ground");
     }
 
     public void OnClickSetting()
