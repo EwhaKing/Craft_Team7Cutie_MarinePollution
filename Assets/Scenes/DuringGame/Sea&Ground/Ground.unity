@@ -1418,6 +1418,12 @@ MonoBehaviour:
   currentFloor: 0
   elevatorMinX: -1.89
   elevatorMaxX: 0.24
+  mainCamera: {fileID: 1611779871}
+  cameraFixedX: 0
+  bottomFollowViewportY: 0.33
+  topFollowViewportY: 0.66
+  clampPlayerXInCamera: 1
+  cameraMoveSpeed: 5
 --- !u!4 &775364184
 Transform:
   m_ObjectHideFlags: 0
