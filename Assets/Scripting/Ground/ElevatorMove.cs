@@ -20,6 +20,10 @@ public class ElevatorMove : MonoBehaviour
     [Header("Ground Physics")]
     public Collider2D groundCollider;
 
+    [Header("Underground Elevator Walls")]
+    public Collider2D leftWallCollider;
+    public Collider2D rightWallCollider;
+    
     private int currentFloor;
     private int targetFloor;
 
@@ -47,6 +51,8 @@ public class ElevatorMove : MonoBehaviour
             targetFloor = currentFloor;
             targetPosition = GetFloorPosition(currentFloor);
         }
+
+        SetUndergroundWalls(currentFloor != 1);
     }
 
     void Update()//매 순간 재생되는 함수
@@ -188,33 +194,37 @@ public class ElevatorMove : MonoBehaviour
 
             if (currentFloor == 1)
             {
-                // 맨 윗층이면 중력 다시 켜기
+                // 지상층
                 if (playerRb != null)
                 {
                     playerRb.linearVelocity = Vector2.zero;
                     playerRb.gravityScale = 1f;
                 }
 
-                // 맨 윗층이면 Ground Collider 켜기
                 if (groundCollider != null)
                 {
                     groundCollider.enabled = true;
                 }
+
+                // 지상층에서는 엘리베이터 벽 끄기
+                SetUndergroundWalls(false);
             }
             else
             {
-                // 지하층이면 중력 끄기 유지
+                // 지하층
                 if (playerRb != null)
                 {
                     playerRb.linearVelocity = Vector2.zero;
                     playerRb.gravityScale = 0f;
                 }
 
-                // 지하층이면 Ground Collider 끄기 유지
                 if (groundCollider != null)
                 {
                     groundCollider.enabled = false;
                 }
+
+                // 지하층에서는 빠져나가지 못하게 벽 켜기
+                SetUndergroundWalls(true);
             }
 
             Debug.Log("도착 층: " + currentFloor);
@@ -245,5 +255,18 @@ public class ElevatorMove : MonoBehaviour
         }
 
         return groundPoint.position;
+    }
+    
+    void SetUndergroundWalls(bool active)
+    {
+        if (leftWallCollider != null)
+        {
+            leftWallCollider.enabled = active;
+        }
+
+        if (rightWallCollider != null)
+        {
+            rightWallCollider.enabled = active;
+        }
     }
 }
