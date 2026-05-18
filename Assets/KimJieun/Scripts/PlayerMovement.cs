@@ -137,22 +137,16 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleFlipByKey()
     {
-        if (Sea)
-        {
-            if (Keyboard.current.dKey.isPressed)
+        if (Keyboard.current.dKey.isPressed)
                 sr.flipX = false;
-            else if (Keyboard.current.aKey.isPressed)
+        else if (Keyboard.current.aKey.isPressed)
                 sr.flipX = true;
-        }
-        else
-        {
-            //Sea가 false일때
-        }
+        
+
     }
 
     void HandleFlipByMouse()
     {
-
         
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
