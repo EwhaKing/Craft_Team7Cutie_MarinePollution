@@ -3,6 +3,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("SeaOrGroundMode")] 
+    public bool Sea = false;
+    public bool Ground = true;
+    
+    
     [Header("Movement Setting")]
     public bool canMoveHorizontal = true;
     public bool canMoveVertical = true;
@@ -11,13 +16,17 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 5f;
 
     [Header("Hook State")]
-    [SerializeField] public bool _isHookMode = false;
+    [SerializeField] public bool _isHookMode = false; //정혜교 땅 모드
+
+
 
     public bool isHookMode
     {
         get {return _isHookMode;}
         set
         {
+            if (!Sea) return; //땅 모드랑 구별하려고 작성했습니다.
+            
             _isHookMode = value;
             if (arm != null) arm.SetActive(_isHookMode);
             if (hook != null) hook.SetActive(_isHookMode);
@@ -38,84 +47,127 @@ public class PlayerMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        sr = bodySr;
-        hookSystem = GetComponent<HookSystem>();
+        if (Sea == true)
+        {
+            rb = GetComponent<Rigidbody2D>();
+            sr = bodySr;
+            hookSystem = GetComponent<HookSystem>();
 
-        isHookMode = false;
+            isHookMode = false;
+        }
+        else {
+            //sea가 false일때 실행할 코드
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_isHookMode && Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (Sea)
         {
-            _isHookMode = false;
-            if (hookSystem != null) hookSystem.CancelHook();
+            if (_isHookMode && Keyboard.current.escapeKey.wasPressedThisFrame)
+            {
+                _isHookMode = false;
+                if (hookSystem != null) hookSystem.CancelHook();
+            }
+
+            arm.SetActive(_isHookMode);
+            hook.SetActive(_isHookMode);
+
+            if (_isHookMode)
+            {
+                rb.linearVelocity = Vector2.zero;
+                HandleFlipByMouse();
+                RotateArm();
+                return;
+            }
+
+            HandleMovement();
+            HandleFlipByKey();
+                
         }
 
-        arm.SetActive(_isHookMode);
-        hook.SetActive(_isHookMode);
-
-        if (_isHookMode)
+        else
         {
-            rb.linearVelocity = Vector2.zero;
-            HandleFlipByMouse();
-            RotateArm();
-            return;
+            //Sea가 false면 실행될 코드
         }
-
-        HandleMovement();
-        HandleFlipByKey();
     }
 
     void HandleMovement()
     {
-        Vector2 moveInput = Vector2.zero;
+        if (Sea)
+        {
+            Vector2 moveInput = Vector2.zero;
 
-        if (Keyboard.current.aKey.isPressed)
-            moveInput.x = -1f;
-        else if (Keyboard.current.dKey.isPressed)
-            moveInput.x = 1f;
-        
-        if (Keyboard.current.wKey.isPressed)
-            moveInput.y = 1f;
-        else if (Keyboard.current.sKey.isPressed)
-            moveInput.y = -1f;
+            if (Keyboard.current.aKey.isPressed)
+                moveInput.x = -1f;
+            else if (Keyboard.current.dKey.isPressed)
+                moveInput.x = 1f;
 
-        if(!canMoveHorizontal) moveInput.x = 0f;
-        if(!canMoveVertical) moveInput.y = 0f;
+            if (Keyboard.current.wKey.isPressed)
+                moveInput.y = 1f;
+            else if (Keyboard.current.sKey.isPressed)
+                moveInput.y = -1f;
 
-        rb.linearVelocity = moveInput * moveSpeed;
+            if (!canMoveHorizontal) moveInput.x = 0f;
+            if (!canMoveVertical) moveInput.y = 0f;
+
+            rb.linearVelocity = moveInput * moveSpeed;
+        }
+        else
+        {
+            //Sea가 False일때
+        }
     }
 
     void HandleFlipByKey()
     {
-        if (Keyboard.current.dKey.isPressed)
-            sr.flipX = false;
-        else if (Keyboard.current.aKey.isPressed)
-            sr.flipX = true;
+        if (Sea)
+        {
+            if (Keyboard.current.dKey.isPressed)
+                sr.flipX = false;
+            else if (Keyboard.current.aKey.isPressed)
+                sr.flipX = true;
+        }
+        else
+        {
+            //Sea가 false일때
+        }
     }
 
     void HandleFlipByMouse()
     {
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        if (Sea)
+        {
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
-        if (mousePos.x < transform.position.x)
-            sr.flipX = true;
+            if (mousePos.x < transform.position.x)
+                sr.flipX = true;
+            else
+                sr.flipX = false;
+        }
         else
-            sr.flipX = false;
+        {
+            //Sea가 False일 때
+        }
     }
 
     void RotateArm()
     {
-        if (armPivot == null) return;
+        if (Sea)
+        {
+            if (armPivot == null) return;
 
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        Vector2 direction = mousePos - (Vector2)armPivot.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            Vector2 direction = mousePos - (Vector2)armPivot.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        armPivot.rotation = Quaternion.Euler(0f, 0f, angle);
+            armPivot.rotation = Quaternion.Euler(0f, 0f, angle);
+        }
+        else
+        {
+            //Sea가 False일 때
+        }
     }
 
 }

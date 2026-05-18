@@ -12,4 +12,5 @@ public static class MaterialList
     public static readonly Item CoralPiece = new MaterialItem("10", "산호 조각", true);
     public static readonly Item CleanWater = new MaterialItem("11", "정화수", false);
     public static readonly Item Bubble = new MaterialItem("12", "공기방울", true);
+    public static readonly Item NetPiece = new MaterialItem("13", "그물조각", true);
 }
