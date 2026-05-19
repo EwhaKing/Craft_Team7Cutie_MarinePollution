@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
         ClampPlayerXInsideCamera();
     }
 
-    int CalculateCurrentFloor(Vector3 pos)
+    int CalculateCurrentFloor(Vector3 pos) //현재 사용자의 위치 층을 받아오는 함수
     {
         float currentYfloor = pos.y;
 
