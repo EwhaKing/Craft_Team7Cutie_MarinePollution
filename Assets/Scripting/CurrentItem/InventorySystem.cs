@@ -9,8 +9,29 @@ public enum SelectedArea
 
 public class InventorySystem : MonoBehaviour
 {
+    
     [SerializeField] private InventoryCurrent inventoryCurrent;
+    private void Awake()
+    {
+        if (inventoryCurrent == null)
+        {
+            inventoryCurrent = GetComponent<InventoryCurrent>();
+        }
 
+        if (inventoryCurrent == null)
+        {
+            inventoryCurrent = FindFirstObjectByType<InventoryCurrent>();
+        }
+
+        if (inventoryCurrent == null)
+        {
+            Debug.LogError("InventoryCurrent를 찾지 못했습니다. InventoryCurrent 컴포넌트를 씬에 추가하거나 InventorySystem에 연결하세요.", this);
+        }
+        else
+        {
+            Debug.Log("InventoryCurrent 연결됨: " + inventoryCurrent.name, this);
+        }
+    }
     private SelectedArea selectedArea = SelectedArea.None;
     private int selectedIndex = -1;
 
@@ -19,6 +40,11 @@ public class InventorySystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.M))
         {
             PressM();
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            inventoryCurrent.PrintInventory();
         }
     }
 
@@ -201,4 +227,116 @@ public class InventorySystem : MonoBehaviour
         selectedIndex = -1;
     }
     
+    
+    private bool AddStackToArray(ItemStack[] targetArray, ItemStack incomingStack)
+    {
+        if (targetArray == null || incomingStack == null)
+            return false;
+
+        int remainingCount = incomingStack.Count;
+
+        for (int i = 0; i < targetArray.Length; i++)
+        {
+            if (targetArray[i] == null)
+                continue;
+
+            if (targetArray[i].Item.Id != incomingStack.Item.Id)
+                continue;
+
+            if (targetArray[i].Count >= targetArray[i].MaxStack)
+                continue;
+
+            int space = targetArray[i].MaxStack - targetArray[i].Count;
+            int addCount = Mathf.Min(space, remainingCount);
+
+            targetArray[i].Count += addCount;
+            remainingCount -= addCount;
+
+            if (remainingCount <= 0)
+            {
+                incomingStack.Count = 0;
+                return true;
+            }
+        }
+
+        while (remainingCount > 0)
+        {
+            int emptyIndex = FindEmptyIndex(targetArray);
+
+            if (emptyIndex == -1)
+            {
+                incomingStack.Count = remainingCount;
+                return false;
+            }
+
+            int addCount = Mathf.Min(incomingStack.MaxStack, remainingCount);
+
+            targetArray[emptyIndex] = new ItemStack(
+                incomingStack.Item,
+                addCount,
+                incomingStack.Icon,
+                incomingStack.MaxStack
+            );
+
+            remainingCount -= addCount;
+        }
+
+        incomingStack.Count = 0;
+        return true;
+    }
+    public bool AddItemStack(ItemStack incomingStack)
+    {
+        if (inventoryCurrent == null)
+        {
+            Debug.LogError("AddItemStack 실패: inventoryCurrent가 null입니다.", this);
+            return false;
+        }
+
+        if (incomingStack == null)
+        {
+            Debug.LogWarning("AddItemStack 실패: incomingStack이 null입니다.", this);
+            return false;
+        }
+
+        if (incomingStack.Item == null)
+        {
+            Debug.LogWarning("AddItemStack 실패: incomingStack.Item이 null입니다.", this);
+            return false;
+        }
+
+        if (incomingStack.Count <= 0)
+        {
+            Debug.LogWarning("AddItemStack 실패: Count가 0 이하입니다.", this);
+            return false;
+        }
+
+        ItemStack stackToAdd = new ItemStack(
+            incomingStack.Item,
+            incomingStack.Count,
+            incomingStack.Icon,
+            incomingStack.MaxStack
+        );
+
+        AddStackToArray(inventoryCurrent.CurrentOriginalSlot, stackToAdd);
+
+        if (stackToAdd.Count > 0)
+        {
+            AddStackToArray(inventoryCurrent.CurrentBag, stackToAdd);
+        }
+
+        bool addedAll = stackToAdd.Count <= 0;
+
+        if (addedAll)
+        {
+            inventoryCurrent.SyncCurrentSlot();
+            Debug.Log("아이템 저장 성공", this);
+            inventoryCurrent.PrintInventory();
+        }
+        else
+        {
+            Debug.LogWarning("아이템 저장 실패: 공간 부족", this);
+        }
+
+        return addedAll;
+    }
 }

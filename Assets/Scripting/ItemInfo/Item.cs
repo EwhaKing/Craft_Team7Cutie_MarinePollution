@@ -5,3 +5,9 @@ public interface Item
     string Name { get; }
     Sprite Icon { get; }
 }
+public enum ItemCategory
+{
+    Material,
+    Equipment,
+    Garbage
+}

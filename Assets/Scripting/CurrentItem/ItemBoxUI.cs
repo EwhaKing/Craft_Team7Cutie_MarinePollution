@@ -18,32 +18,51 @@ public class ItemBoxUI : MonoBehaviour
         area = selectedArea;
         realIndex = index;
 
-        button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(OnClick);
+        if (button != null)
+        {
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(OnClick);
+        }
 
         if (stack == null)
         {
-            iconImage.sprite = null;
-            iconImage.enabled = false;
-
-            if (countText != null)
-                countText.text = "";
-
-            button.interactable = false;
+            ClearVisual();
             return;
         }
 
-        iconImage.sprite = stack.Icon;
-        iconImage.enabled = true;
+        if (iconImage != null)
+        {
+            iconImage.sprite = stack.Icon;
+            iconImage.enabled = stack.Icon != null;
+        }
 
         if (countText != null)
             countText.text = stack.Count > 1 ? stack.Count.ToString() : "";
 
-        button.interactable = true;
+        if (button != null)
+            button.interactable = true;
+    }
+
+    public void ClearVisual()
+    {
+        if (iconImage != null)
+        {
+            iconImage.sprite = null;
+            iconImage.enabled = false;
+        }
+
+        if (countText != null)
+            countText.text = "";
+
+        if (button != null)
+            button.interactable = false;
     }
 
     private void OnClick()
     {
+        if (inventorySystem == null)
+            return;
+
         inventorySystem.SelectItem(area, realIndex);
     }
 }
