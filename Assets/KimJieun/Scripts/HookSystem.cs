@@ -26,6 +26,7 @@ public class HookSystem : MonoBehaviour
 
     private HookState currentState = HookState.Idle;
     private Vector2 targetPos;
+    private Vector2 returnPos;
     private GameObject caughtTrash;
     private PlayerMovement playerMovement;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -104,6 +105,7 @@ public class HookSystem : MonoBehaviour
 
         if (Vector2.Distance(hook.transform.position, targetPos) < 0.1f)
         {
+            returnPos = armPivot.position;
             currentState = HookState.Returning;
         }
     }
@@ -144,11 +146,11 @@ public class HookSystem : MonoBehaviour
     {
         hook.transform.position = Vector2.MoveTowards(
             hook.transform.position,
-            armPivot.position,
+            returnPos,
             hookSpeed * Time.deltaTime
         );
 
-        if (Vector2.Distance(hook.transform.position, armPivot.position) < 0.1f)
+        if (Vector2.Distance(hook.transform.position, returnPos) < 0.1f)
         {
             ReturnHook();
         }

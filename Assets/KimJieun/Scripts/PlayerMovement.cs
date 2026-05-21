@@ -73,6 +73,8 @@ public class PlayerMovement : MonoBehaviour
         if (Sea)
         {
             rb.gravityScale = 0f;
+            canMoveVertical = true;
+            canMoveHorizontal = true;
             
             if (_isHookMode && Keyboard.current.escapeKey.wasPressedThisFrame)
             {
