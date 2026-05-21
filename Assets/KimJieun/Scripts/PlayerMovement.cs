@@ -53,7 +53,6 @@ public class PlayerMovement : MonoBehaviour
         
         if (Sea == true)
         {
-            rb.gravityScale = 0f;
             isHookMode = false;
         }
         else {
@@ -73,6 +72,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Sea)
         {
+            rb.gravityScale = 0f;
+            
             if (_isHookMode && Keyboard.current.escapeKey.wasPressedThisFrame)
             {
                 _isHookMode = false;
