@@ -1,14 +1,16 @@
-[System.Serializable]
 public class ItemStack
 {
-    public string itemId;
-    public int amount;
-    public int maxStack;
+    public Item Item { get; private set; }
+    public int Count { get; set; }
+    public int MaxStack { get; private set; }
 
-    public ItemStack(string itemId, int amount, int maxStack = 64)
+    public string ItemId => Item.Id;
+    public string ItemName => Item.Name;
+
+    public ItemStack(Item item, int count, int maxStack = 99)
     {
-        this.itemId = itemId;
-        this.amount = amount;
-        this.maxStack = maxStack;
+        Item = item;
+        Count = count;
+        MaxStack = maxStack;
     }
 }
