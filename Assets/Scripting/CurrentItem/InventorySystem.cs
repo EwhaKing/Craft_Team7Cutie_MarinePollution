@@ -7,58 +7,40 @@ public enum SelectedArea
     Bag
 }
 
-public class InventorySystem
+public class InventorySystem : MonoBehaviour
 {
-    private const int OriginalSlotSize = 20;
-    private const int MaxBagSize = 40;
-    private const int MaxSlotSize = OriginalSlotSize + MaxBagSize;
-
-    private bool Bag = false;
-
-    // 현재 가방이 열려 있으면 40, 닫혀 있으면 0
-    public int BagSize
-    {
-        get
-        {
-            return Bag ? MaxBagSize : 0;
-        }
-    }
-
-    // 현재 화면에 보여줄 슬롯 수
-    public int SlotSize
-    {
-        get
-        {
-            return OriginalSlotSize + BagSize;
-        }
-    }
-
-    public ItemStack[] CurrentSlot = new ItemStack[MaxSlotSize];                 // 전체 표시용 슬롯 60칸
-    public ItemStack[] CurrentOriginalSlot = new ItemStack[OriginalSlotSize];   // 기본 슬롯 20칸
-    public ItemStack[] CurrentBag = new ItemStack[MaxBagSize];                  // 가방 슬롯 40칸
+    [SerializeField] private InventoryCurrent inventoryCurrent;
 
     private SelectedArea selectedArea = SelectedArea.None;
     private int selectedIndex = -1;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            PressM();
+        }
+    }
 
     public void SelectItem(SelectedArea area, int index)
     {
         if (area == SelectedArea.Slot)
         {
-            if (index < 0 || index >= CurrentOriginalSlot.Length)
+            if (index < 0 || index >= inventoryCurrent.CurrentOriginalSlot.Length)
                 return;
 
-            if (CurrentOriginalSlot[index] == null)
+            if (inventoryCurrent.CurrentOriginalSlot[index] == null)
                 return;
         }
         else if (area == SelectedArea.Bag)
         {
-            if (!Bag)
+            if (!inventoryCurrent.IsBagOpen)
                 return;
 
-            if (index < 0 || index >= CurrentBag.Length)
+            if (index < 0 || index >= inventoryCurrent.CurrentBag.Length)
                 return;
 
-            if (CurrentBag[index] == null)
+            if (inventoryCurrent.CurrentBag[index] == null)
                 return;
         }
         else
@@ -77,37 +59,41 @@ public class InventorySystem
 
         if (selectedArea == SelectedArea.Slot)
         {
-            if (IsFull(CurrentBag))
+            ItemStack movingStack = inventoryCurrent.CurrentOriginalSlot[selectedIndex];
+
+            if (!CanMoveTo(inventoryCurrent.CurrentBag, movingStack))
             {
                 Debug.Log("가방이 가득 차서 이동할 수 없습니다.");
                 return;
             }
 
-            MoveItem(CurrentOriginalSlot, CurrentBag, selectedIndex);
+            MoveItem(inventoryCurrent.CurrentOriginalSlot, inventoryCurrent.CurrentBag, selectedIndex);
 
-            if (IsFull(CurrentBag))
+            if (IsFull(inventoryCurrent.CurrentBag))
             {
-                CloseBag();
+                inventoryCurrent.CloseBag();
             }
         }
         else if (selectedArea == SelectedArea.Bag)
         {
-            if (IsFull(CurrentOriginalSlot))
+            ItemStack movingStack = inventoryCurrent.CurrentBag[selectedIndex];
+
+            if (!CanMoveTo(inventoryCurrent.CurrentOriginalSlot, movingStack))
             {
                 Debug.Log("기본 슬롯이 가득 차서 이동할 수 없습니다.");
                 return;
             }
 
-            MoveItem(CurrentBag, CurrentOriginalSlot, selectedIndex);
+            MoveItem(inventoryCurrent.CurrentBag, inventoryCurrent.CurrentOriginalSlot, selectedIndex);
         }
 
-        SyncCurrentSlot();
+        inventoryCurrent.SyncCurrentSlot();
         ClearSelection();
     }
 
     private void MoveItem(ItemStack[] fromArray, ItemStack[] toArray, int fromIndex)
     {
-        if (fromIndex < 0 || fromIndex >= fromArray.Length) //
+        if (fromIndex < 0 || fromIndex >= fromArray.Length)
             return;
 
         ItemStack movingStack = fromArray[fromIndex];
@@ -117,7 +103,6 @@ public class InventorySystem
 
         int remainingCount = movingStack.Count;
 
-        // 1. 같은 아이템 슬롯에 먼저 99개까지 채우기
         for (int i = 0; i < toArray.Length; i++)
         {
             if (toArray[i] == null)
@@ -142,14 +127,12 @@ public class InventorySystem
             }
         }
 
-        // 2. 남은 개수가 있으면 새 빈 슬롯에 최대 99개씩 배정
         while (remainingCount > 0)
         {
             int emptyIndex = FindEmptyIndex(toArray);
 
             if (emptyIndex == -1)
             {
-                // 다 못 옮긴 경우 원래 슬롯에 남은 수량 유지
                 movingStack.Count = remainingCount;
                 Debug.Log("빈 칸이 부족해서 일부 아이템만 이동했습니다.");
                 return;
@@ -160,49 +143,34 @@ public class InventorySystem
             toArray[emptyIndex] = new ItemStack(
                 movingStack.Item,
                 moveCount,
+                movingStack.Icon,
                 movingStack.MaxStack
             );
 
             remainingCount -= moveCount;
         }
 
-        // 3. 전부 이동했으면 원래 슬롯 비우기
         fromArray[fromIndex] = null;
     }
 
-    private void SyncCurrentSlot() //CurrentOriginalSlot + CurrentBag를 합쳐서 CurrentSlot에 반영하는 함수이다. 
+    private bool CanMoveTo(ItemStack[] toArray, ItemStack movingStack)
     {
-        // 전체 슬롯 초기화
-        for (int i = 0; i < CurrentSlot.Length; i++)
-        {
-            CurrentSlot[i] = null;
-        }
+        if (movingStack == null)
+            return false;
 
-        // 기본 슬롯 0 ~ 19
-        for (int i = 0; i < OriginalSlotSize; i++)
+        for (int i = 0; i < toArray.Length; i++)
         {
-            CurrentSlot[i] = CurrentOriginalSlot[i];
-        }
+            if (toArray[i] == null)
+                return true;
 
-        // 가방이 열려 있을 때만 20 ~ 59 표시
-        if (Bag)
-        {
-            for (int i = 0; i < MaxBagSize; i++)
+            if (toArray[i].Item.Id == movingStack.Item.Id &&
+                toArray[i].Count < toArray[i].MaxStack)
             {
-                CurrentSlot[OriginalSlotSize + i] = CurrentBag[i];
+                return true;
             }
         }
-    }
 
-    private int FindSameItemIndex(ItemStack[] array, string itemId)
-    {
-        for (int i = 0; i < array.Length; i++)
-        {
-            if (array[i] != null && array[i].Item.Id == itemId)
-                return i;
-        }
-
-        return -1;
+        return false;
     }
 
     private int FindEmptyIndex(ItemStack[] array)
@@ -216,32 +184,6 @@ public class InventorySystem
         return -1;
     }
 
-    public void OpenBag()
-    {
-        Bag = true;
-        SyncCurrentSlot();
-    }
-
-    public void CloseBag()
-    {
-        Bag = false;
-        ClearSelection();
-        SyncCurrentSlot();
-
-        Debug.Log("가방이 닫혔습니다.");
-    }
-
-    public bool IsBagOpen()
-    {
-        return Bag;
-    }
-
-    private void ClearSelection()
-    {
-        selectedArea = SelectedArea.None;
-        selectedIndex = -1;
-    }
-
     private bool IsFull(ItemStack[] array)
     {
         for (int i = 0; i < array.Length; i++)
@@ -252,4 +194,11 @@ public class InventorySystem
 
         return true;
     }
+
+    private void ClearSelection()
+    {
+        selectedArea = SelectedArea.None;
+        selectedIndex = -1;
+    }
+    
 }

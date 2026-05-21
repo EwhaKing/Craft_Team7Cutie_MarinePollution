@@ -676,6 +676,7 @@ GameObject:
   - component: {fileID: 269693460}
   - component: {fileID: 269693462}
   - component: {fileID: 269693461}
+  - component: {fileID: 269693463}
   m_Layer: 5
   m_Name: Itembox6
   m_TagString: Untagged
@@ -740,6 +741,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 269693459}
   m_CullTransparentMesh: 1
+--- !u!114 &269693463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269693459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03a641b35af5a64bb90170bae48b315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemBoxUI
+  iconImage: {fileID: 0}
+  countText: {fileID: 0}
+  button: {fileID: 0}
 --- !u!1 &388622881
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,6 +949,7 @@ GameObject:
   - component: {fileID: 426645800}
   - component: {fileID: 426645802}
   - component: {fileID: 426645801}
+  - component: {fileID: 426645803}
   m_Layer: 5
   m_Name: Itembox4
   m_TagString: Untagged
@@ -997,6 +1014,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 426645799}
   m_CullTransparentMesh: 1
+--- !u!114 &426645803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426645799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03a641b35af5a64bb90170bae48b315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemBoxUI
+  iconImage: {fileID: 0}
+  countText: {fileID: 0}
+  button: {fileID: 0}
 --- !u!1 &444938363
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,6 +1131,7 @@ GameObject:
   - component: {fileID: 461719372}
   - component: {fileID: 461719374}
   - component: {fileID: 461719373}
+  - component: {fileID: 461719375}
   m_Layer: 5
   m_Name: Itembox10
   m_TagString: Untagged
@@ -1163,6 +1196,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 461719371}
   m_CullTransparentMesh: 1
+--- !u!114 &461719375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461719371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03a641b35af5a64bb90170bae48b315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemBoxUI
+  iconImage: {fileID: 0}
+  countText: {fileID: 0}
+  button: {fileID: 0}
 --- !u!1 &467421522
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,7 +1550,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 518977822}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1858186317}
+        m_TargetAssemblyTypeName: ItemPanelUI, Assembly-CSharp
+        m_MethodName: OnClickDownButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &518977822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1552,6 +1612,7 @@ GameObject:
   - component: {fileID: 555587173}
   - component: {fileID: 555587175}
   - component: {fileID: 555587174}
+  - component: {fileID: 555587176}
   m_Layer: 5
   m_Name: Itembox7
   m_TagString: Untagged
@@ -1616,6 +1677,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 555587172}
   m_CullTransparentMesh: 1
+--- !u!114 &555587176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555587172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03a641b35af5a64bb90170bae48b315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemBoxUI
+  iconImage: {fileID: 0}
+  countText: {fileID: 0}
+  button: {fileID: 0}
 --- !u!1 &588426768
 GameObject:
   m_ObjectHideFlags: 0
@@ -1765,6 +1841,7 @@ GameObject:
   - component: {fileID: 677817973}
   - component: {fileID: 677817975}
   - component: {fileID: 677817974}
+  - component: {fileID: 677817976}
   m_Layer: 5
   m_Name: Itembox1
   m_TagString: Untagged
@@ -1829,6 +1906,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 677817972}
   m_CullTransparentMesh: 1
+--- !u!114 &677817976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677817972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03a641b35af5a64bb90170bae48b315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemBoxUI
+  iconImage: {fileID: 0}
+  countText: {fileID: 0}
+  button: {fileID: 0}
 --- !u!1 &697042688 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5145079207238391847, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
@@ -1845,6 +1937,7 @@ GameObject:
   - component: {fileID: 704626209}
   - component: {fileID: 704626211}
   - component: {fileID: 704626210}
+  - component: {fileID: 704626212}
   m_Layer: 5
   m_Name: Itembox5
   m_TagString: Untagged
@@ -1909,6 +2002,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 704626208}
   m_CullTransparentMesh: 1
+--- !u!114 &704626212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704626208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03a641b35af5a64bb90170bae48b315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemBoxUI
+  iconImage: {fileID: 0}
+  countText: {fileID: 0}
+  button: {fileID: 0}
 --- !u!1 &745343576
 GameObject:
   m_ObjectHideFlags: 0
@@ -2709,6 +2817,7 @@ GameObject:
   - component: {fileID: 1292802939}
   - component: {fileID: 1292802941}
   - component: {fileID: 1292802940}
+  - component: {fileID: 1292802942}
   m_Layer: 5
   m_Name: Itembox9
   m_TagString: Untagged
@@ -2773,6 +2882,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1292802938}
   m_CullTransparentMesh: 1
+--- !u!114 &1292802942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292802938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03a641b35af5a64bb90170bae48b315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemBoxUI
+  iconImage: {fileID: 0}
+  countText: {fileID: 0}
+  button: {fileID: 0}
 --- !u!1 &1318172222
 GameObject:
   m_ObjectHideFlags: 0
@@ -3009,6 +3133,7 @@ GameObject:
   - component: {fileID: 1410138841}
   - component: {fileID: 1410138843}
   - component: {fileID: 1410138842}
+  - component: {fileID: 1410138844}
   m_Layer: 5
   m_Name: Itembox3
   m_TagString: Untagged
@@ -3073,6 +3198,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410138840}
   m_CullTransparentMesh: 1
+--- !u!114 &1410138844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410138840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03a641b35af5a64bb90170bae48b315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemBoxUI
+  iconImage: {fileID: 0}
+  countText: {fileID: 0}
+  button: {fileID: 0}
 --- !u!1 &1410317817
 GameObject:
   m_ObjectHideFlags: 0
@@ -3266,6 +3406,7 @@ GameObject:
   - component: {fileID: 1451019180}
   - component: {fileID: 1451019182}
   - component: {fileID: 1451019181}
+  - component: {fileID: 1451019183}
   m_Layer: 5
   m_Name: Itembox8
   m_TagString: Untagged
@@ -3330,6 +3471,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1451019179}
   m_CullTransparentMesh: 1
+--- !u!114 &1451019183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451019179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03a641b35af5a64bb90170bae48b315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemBoxUI
+  iconImage: {fileID: 0}
+  countText: {fileID: 0}
+  button: {fileID: 0}
 --- !u!1 &1545984786
 GameObject:
   m_ObjectHideFlags: 0
@@ -3432,6 +3588,7 @@ GameObject:
   - component: {fileID: 1569141217}
   - component: {fileID: 1569141219}
   - component: {fileID: 1569141218}
+  - component: {fileID: 1569141220}
   m_Layer: 5
   m_Name: Itembox2
   m_TagString: Untagged
@@ -3496,6 +3653,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1569141216}
   m_CullTransparentMesh: 1
+--- !u!114 &1569141220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569141216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03a641b35af5a64bb90170bae48b315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemBoxUI
+  iconImage: {fileID: 0}
+  countText: {fileID: 0}
+  button: {fileID: 0}
 --- !u!1 &1611779869
 GameObject:
   m_ObjectHideFlags: 0
@@ -4002,6 +4174,9 @@ GameObject:
   - component: {fileID: 1858186313}
   - component: {fileID: 1858186315}
   - component: {fileID: 1858186314}
+  - component: {fileID: 1858186316}
+  - component: {fileID: 1858186317}
+  - component: {fileID: 1858186318}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -4069,6 +4244,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1858186312}
   m_CullTransparentMesh: 1
+--- !u!114 &1858186316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858186312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fc16cc93e1505141bfffc767ecd6e3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventorySystem
+  inventoryCurrent: {fileID: 0}
+--- !u!114 &1858186317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858186312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfdba46124dd4de4c9f27ec8987db099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemPanelUI
+  inventorySystem: {fileID: 1858186316}
+  inventoryCurrent: {fileID: 0}
+  itemBoxes:
+  - {fileID: 677817976}
+  - {fileID: 1569141220}
+  - {fileID: 1410138844}
+  - {fileID: 426645803}
+  - {fileID: 704626212}
+  - {fileID: 269693463}
+  - {fileID: 555587176}
+  - {fileID: 1451019183}
+  - {fileID: 1292802942}
+  - {fileID: 461719375}
+--- !u!114 &1858186318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858186312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d35db57d35d5b4478e0ba7040cc37b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryCurrent
 --- !u!1 &1922836569
 GameObject:
   m_ObjectHideFlags: 0
@@ -4423,7 +4648,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2002699100}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1858186317}
+        m_TargetAssemblyTypeName: ItemPanelUI, Assembly-CSharp
+        m_MethodName: OnClickUpButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2002699100
 MonoBehaviour:
   m_ObjectHideFlags: 0
