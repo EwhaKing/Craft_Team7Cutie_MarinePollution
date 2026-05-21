@@ -8,21 +8,34 @@ public class ItemBoxUI : MonoBehaviour
     [SerializeField] private TMP_Text countText;
     [SerializeField] private Button button;
 
-    private InventorySystem inventorySystem;
+    private InventorySystem inventory;
     private SelectedArea area;
-    private int realIndex;
+    private int index;
+    private ItemStack currentStack;
 
-    public void Setup(InventorySystem inventory, SelectedArea selectedArea, int index, ItemStack stack)
+    private void Awake()
     {
-        inventorySystem = inventory;
-        area = selectedArea;
-        realIndex = index;
+        if (button == null)
+            button = GetComponent<Button>();
+
+        if (iconImage == null)
+            iconImage = GetComponentInChildren<Image>();
 
         if (button != null)
         {
-            button.onClick.RemoveAllListeners();
+            button.onClick.RemoveListener(OnClick);
             button.onClick.AddListener(OnClick);
         }
+
+        ClearVisual();
+    }
+
+    public void Setup(InventorySystem inventory, SelectedArea area, int index, ItemStack stack)
+    {
+        this.inventory = inventory;
+        this.area = area;
+        this.index = index;
+        this.currentStack = stack;
 
         if (stack == null)
         {
@@ -34,17 +47,20 @@ public class ItemBoxUI : MonoBehaviour
         {
             iconImage.sprite = stack.Icon;
             iconImage.enabled = stack.Icon != null;
+            iconImage.preserveAspect = true;
         }
 
         if (countText != null)
+        {
             countText.text = stack.Count > 1 ? stack.Count.ToString() : "";
-
-        if (button != null)
-            button.interactable = true;
+            countText.enabled = stack.Count > 1;
+        }
     }
 
     public void ClearVisual()
     {
+        currentStack = null;
+
         if (iconImage != null)
         {
             iconImage.sprite = null;
@@ -52,17 +68,15 @@ public class ItemBoxUI : MonoBehaviour
         }
 
         if (countText != null)
+        {
             countText.text = "";
-
-        if (button != null)
-            button.interactable = false;
+            countText.enabled = false;
+        }
     }
 
     private void OnClick()
     {
-        if (inventorySystem == null)
-            return;
-
-        inventorySystem.SelectItem(area, realIndex);
+        Debug.Log($"클릭된 슬롯: {area}, {index}");
     }
+    
 }

@@ -45,7 +45,7 @@ public class PlayerItemPicker : MonoBehaviour
             return;
 
         nearbyDroppedItem = droppedItem;
-        Debug.Log($"{droppedItem.ItemStack.ItemName} 줍기 가능");
+        Debug.Log($"{droppedItem.ItemStack.Name} 줍기 가능");
     }
     public bool TryPickup(ItemStack itemStack)
     {

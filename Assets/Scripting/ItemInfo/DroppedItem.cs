@@ -28,7 +28,14 @@ public class DroppedItem : MonoBehaviour
 
         if (item == null)
         {
-            Debug.LogError("DroppedItem의 Item이 null입니다.", this);
+            Debug.LogError(
+                "[DroppedItem] GetItem() 결과가 null입니다.\n" +
+                "ItemCategory: " + itemCategory + "\n" +
+                "MaterialType: " + materialType + "\n" +
+                "EquipmentType: " + equipmentType + "\n" +
+                "GarbageType: " + garbageType,
+                this
+            );
             return;
         }
 
@@ -38,11 +45,45 @@ public class DroppedItem : MonoBehaviour
             item.Icon,
             maxStack
         );
+
+        Debug.Log(
+            "[DroppedItem] Awake에서 ItemStack 생성 완료\n" +
+            "Id: " + item.Id + "\n" +
+            "Name: " + item.Name + "\n" +
+            "Count: " + count + "\n" +
+            "Icon null?: " + (item.Icon == null) + "\n" +
+            "Icon name: " + (item.Icon != null ? item.Icon.name : "NULL"),
+            this
+        );
     }
 
     public void Init(Item item, int count, Sprite icon = null, int maxStack = 99)
     {
-        itemStack = new ItemStack(item, count, icon, maxStack);
+        if (item == null)
+        {
+            Debug.LogError("[DroppedItem] Init 실패: item이 null입니다.", this);
+            itemStack = null;
+            return;
+        }
+
+        Sprite finalIcon = icon != null ? icon : item.Icon;
+
+        itemStack = new ItemStack(
+            item,
+            count,
+            finalIcon,
+            maxStack
+        );
+
+        Debug.Log(
+            "[DroppedItem] Init 완료\n" +
+            "Id: " + item.Id + "\n" +
+            "Name: " + item.Name + "\n" +
+            "Count: " + count + "\n" +
+            "Icon null?: " + (finalIcon == null) + "\n" +
+            "Icon name: " + (finalIcon != null ? finalIcon.name : "NULL"),
+            this
+        );
     }
 
     public void Init(ItemStack stack)
