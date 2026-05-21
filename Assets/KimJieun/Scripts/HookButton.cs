@@ -21,9 +21,15 @@ public class HookButton : MonoBehaviour
 
     public void OnHookButtonClick()
     {
-        if (playerMovement == null) return;
+        if (playerMovement == null)
+        {
+            Debug.Log("playermovement null");
+            return;
+        } 
 
         playerMovement._isHookMode = !playerMovement._isHookMode;
+        Debug.Log("hook mode: " + playerMovement._isHookMode);
+
 
         if (!playerMovement._isHookMode)
         {
