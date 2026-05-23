@@ -18,6 +18,8 @@ public class InventorySystem : MonoBehaviour
     [Header("Bag UI")]
     [SerializeField] private ItemBoxUI[] bagSlotUIs;
 
+    [SerializeField] private ItemPanelUI itemPanelUI;
+    
     private SelectedArea selectedArea = SelectedArea.None;
     private int selectedIndex = -1;
 
@@ -153,7 +155,31 @@ public class InventorySystem : MonoBehaviour
 
         return true;
     }
+    public bool AddItemById(string itemId)
+    {
+        if (string.IsNullOrEmpty(itemId))
+        {
+            Debug.LogWarning("[InventorySystem] AddItemById 실패: itemId가 비어 있습니다.", this);
+            return false;
+        }
 
+        Item item = ItemDatabase.GetItemById(itemId);
+
+        if (item == null)
+        {
+            Debug.LogWarning("[InventorySystem] AddItemById 실패: Item을 찾을 수 없습니다. Id: " + itemId, this);
+            return false;
+        }
+
+        ItemStack stack = new ItemStack(
+            item,
+            1,
+            item.Icon,
+            99
+        );
+
+        return AddItemStack(stack);
+    }
     private bool AddStackToArray(ItemStack[] targetArray, ItemStack incomingStack)
     {
         Debug.Log("========== [AddStackToArray] 시작 ==========");
@@ -281,29 +307,7 @@ public class InventorySystem : MonoBehaviour
         Debug.LogWarning("[AddStackToArray] 저장 실패: 빈 슬롯이 없습니다.");
         return false;
     }
-
-    public void RefreshUI()
-    {
-        if (inventoryCurrent == null)
-        {
-            Debug.LogWarning("RefreshUI 실패: inventoryCurrent가 null입니다.", this);
-            return;
-        }
-
-        Debug.Log("[InventorySystem] RefreshUI 호출됨", this);
-
-        RefreshSlotArray(
-            originalSlotUIs,
-            inventoryCurrent.CurrentOriginalSlot,
-            SelectedArea.Slot
-        );
-
-        RefreshSlotArray(
-            bagSlotUIs,
-            inventoryCurrent.CurrentBag,
-            SelectedArea.Bag
-        );
-    }
+    
 
     private void RefreshSlotArray(ItemBoxUI[] slotUIs, ItemStack[] stacks, SelectedArea area)
     {
@@ -601,5 +605,45 @@ public class InventorySystem : MonoBehaviour
     {
         selectedArea = SelectedArea.None;
         selectedIndex = -1;
+    }
+    public void RefreshUI()
+    {
+        if (inventoryCurrent == null)
+        {
+            Debug.LogWarning("RefreshUI 실패: inventoryCurrent가 null입니다.", this);
+            return;
+        }
+
+        inventoryCurrent.SyncCurrentSlot();
+
+        Debug.Log("[InventorySystem] RefreshUI 호출됨", this);
+
+        Debug.Log("[InventorySystem] originalSlotUIs null?: " + (originalSlotUIs == null), this);
+        Debug.Log("[InventorySystem] originalSlotUIs Length: " + (originalSlotUIs != null ? originalSlotUIs.Length : -1), this);
+
+        RefreshSlotArray(
+            originalSlotUIs,
+            inventoryCurrent.CurrentOriginalSlot,
+            SelectedArea.Slot
+        );
+
+        Debug.Log("[InventorySystem] bagSlotUIs null?: " + (bagSlotUIs == null), this);
+        Debug.Log("[InventorySystem] bagSlotUIs Length: " + (bagSlotUIs != null ? bagSlotUIs.Length : -1), this);
+
+        RefreshSlotArray(
+            bagSlotUIs,
+            inventoryCurrent.CurrentBag,
+            SelectedArea.Bag
+        );
+
+        if (itemPanelUI != null)
+        {
+            Debug.Log("[InventorySystem] itemPanelUI.Refresh 호출", itemPanelUI);
+            itemPanelUI.Refresh();
+        }
+        else
+        {
+            Debug.LogWarning("[InventorySystem] itemPanelUI가 연결되지 않았습니다.", this);
+        }
     }
 }
