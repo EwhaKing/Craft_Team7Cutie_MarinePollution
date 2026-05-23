@@ -4,7 +4,8 @@ using TMPro;
 
 public class ItemBoxUI : MonoBehaviour
 {
-    [SerializeField] private Image iconImage;
+    [Header("UI")]
+    [SerializeField] private Image itemImage;
     [SerializeField] private TMP_Text countText;
     [SerializeField] private Button button;
 
@@ -17,9 +18,6 @@ public class ItemBoxUI : MonoBehaviour
     {
         if (button == null)
             button = GetComponent<Button>();
-
-        if (iconImage == null)
-            iconImage = GetComponentInChildren<Image>();
 
         if (button != null)
         {
@@ -37,34 +35,75 @@ public class ItemBoxUI : MonoBehaviour
         this.index = index;
         this.currentStack = stack;
 
-        if (stack == null)
+        if (stack == null || stack.Item == null || stack.Count <= 0)
         {
             ClearVisual();
             return;
         }
 
-        if (iconImage != null)
+        string itemId = stack.Item.Id;
+
+        Item item = ItemDatabase.GetItemById(itemId);
+
+        if (item == null)
         {
-            iconImage.sprite = stack.Icon;
-            iconImage.enabled = stack.Icon != null;
-            iconImage.preserveAspect = true;
+            Debug.LogWarning("[ItemBoxUI] Item을 찾을 수 없습니다. Id: " + itemId, this);
+            ClearVisual();
+            return;
         }
 
-        if (countText != null)
+        ApplyItemImage(item);
+        ApplyCount(stack.Count);
+
+        Debug.Log(
+            "[ItemBoxUI] 표시 완료 / " +
+            "Id: " + item.Id +
+            " / Name: " + item.Name +
+            " / Count: " + stack.Count +
+            " / Icon null?: " + (item.Icon == null),
+            this
+        );
+    }
+
+    private void ApplyItemImage(Item item)
+    {
+        if (itemImage == null)
         {
-            countText.text = stack.Count > 1 ? stack.Count.ToString() : "";
-            countText.enabled = stack.Count > 1;
+            Debug.LogWarning("[ItemBoxUI] itemImage가 연결되지 않았습니다.", this);
+            return;
         }
+
+        Debug.Log(
+            "[ItemBoxUI] ApplyItemImage / " +
+            "itemImage GameObject: " + itemImage.gameObject.name +
+            " / sprite: " + (item.Icon == null ? "null" : item.Icon.name),
+            this
+        );
+
+        itemImage.gameObject.SetActive(true);
+        itemImage.sprite = item.Icon;
+        itemImage.enabled = item.Icon != null;
+        itemImage.preserveAspect = true;
+        itemImage.color = Color.white;
+    }
+
+    private void ApplyCount(int count)
+    {
+        if (countText == null)
+            return;
+
+        countText.text = count > 1 ? count.ToString() : "";
+        countText.enabled = count > 1;
     }
 
     public void ClearVisual()
     {
         currentStack = null;
 
-        if (iconImage != null)
+        if (itemImage != null)
         {
-            iconImage.sprite = null;
-            iconImage.enabled = false;
+            itemImage.sprite = null;
+            itemImage.enabled = false;
         }
 
         if (countText != null)
@@ -77,6 +116,10 @@ public class ItemBoxUI : MonoBehaviour
     private void OnClick()
     {
         Debug.Log($"클릭된 슬롯: {area}, {index}");
+
+        if (inventory != null && area != SelectedArea.None && index >= 0)
+        {
+            inventory.SelectItem(area, index);
+        }
     }
-    
 }

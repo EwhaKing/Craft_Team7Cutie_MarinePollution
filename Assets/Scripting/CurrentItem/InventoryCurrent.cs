@@ -6,9 +6,9 @@ public class InventoryCurrent : MonoBehaviour
     public const int MaxBagSize = 40;
     public const int MaxSlotSize = OriginalSlotSize + MaxBagSize;
 
-    public ItemStack[] CurrentSlot = new ItemStack[MaxSlotSize];
-    public ItemStack[] CurrentOriginalSlot = new ItemStack[OriginalSlotSize];
-    public ItemStack[] CurrentBag = new ItemStack[MaxBagSize];
+    public ItemStack[] CurrentSlot;
+    public ItemStack[] CurrentOriginalSlot;
+    public ItemStack[] CurrentBag;
 
     private bool bagOpen = false;
 
@@ -20,7 +20,31 @@ public class InventoryCurrent : MonoBehaviour
 
     private void Awake()
     {
+        EnsureArraySizes();
         SyncCurrentSlot();
+    }
+
+    private void OnValidate()
+    {
+        EnsureArraySizes();
+    }
+
+    private void EnsureArraySizes()
+    {
+        if (CurrentSlot == null || CurrentSlot.Length != MaxSlotSize)
+        {
+            CurrentSlot = new ItemStack[MaxSlotSize];
+        }
+
+        if (CurrentOriginalSlot == null || CurrentOriginalSlot.Length != OriginalSlotSize)
+        {
+            CurrentOriginalSlot = new ItemStack[OriginalSlotSize];
+        }
+
+        if (CurrentBag == null || CurrentBag.Length != MaxBagSize)
+        {
+            CurrentBag = new ItemStack[MaxBagSize];
+        }
     }
 
     public void OpenBag()
@@ -41,6 +65,8 @@ public class InventoryCurrent : MonoBehaviour
 
     public void SyncCurrentSlot()
     {
+        EnsureArraySizes();
+
         for (int i = 0; i < CurrentSlot.Length; i++)
         {
             CurrentSlot[i] = null;
@@ -62,6 +88,8 @@ public class InventoryCurrent : MonoBehaviour
 
     public void PrintInventory()
     {
+        EnsureArraySizes();
+
         Debug.Log("===== 현재 인벤토리 =====", this);
 
         Debug.Log("----- 기본 슬롯 -----", this);
@@ -95,19 +123,6 @@ public class InventoryCurrent : MonoBehaviour
             return;
         }
 
-        string itemText = GetItemDisplayName(stack.Item);
-
-        Debug.Log($"{slotName} {index}: {itemText} x{stack.Count}", this);
-    }
-
-    private string GetItemDisplayName(Item item)
-    {
-        // Item에 Name이 있다면 이 줄을 사용하세요.
-        return item.Name;
-
-        // 만약 item.Name에서 에러가 나면 위 줄을 지우고 아래 중 하나로 바꾸세요.
-        // return item.Id.ToString();
-        // return item.name;
-        // return "아이템";
+        Debug.Log($"{slotName} {index}: {stack.Item.Name} x{stack.Count}", this);
     }
 }
