@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class CoralGenerator : Equipment
 {
@@ -9,14 +10,13 @@ public class CoralGenerator : Equipment
         {"12",5}// 정화수 5개
     };
 
+    public override string Id => "108";
+    public override string Name => "산호초 생성기";
+
+    public override bool Rareness => false;
+    public override int Stage => 1;
+    public override Sprite Icon => null;
+
     public override Dictionary<string, int> Recipe => CoralGeneratorrecipe;
 
-
-    public CoralGenerator()
-    {
-        Id = "108";
-        Name = "산호초 생성기";
-        Rareness = false;
-        Stage = 1;
-    }
 }

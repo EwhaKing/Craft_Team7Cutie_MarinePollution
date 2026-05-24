@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Rope : Equipment
 {
@@ -8,14 +9,12 @@ public class Rope : Equipment
         { "2", 4 }  // 밧줄 4개
     };
 
+    public override string Id => "102";
+    public override string Name => "밧줄";
+
+    public override bool Rareness => false;
+    public override int Stage => 1;
+    public override Sprite Icon => null;
+
     public override Dictionary<string, int> Recipe => RopeRecipe;
-
-
-    public Rope()
-    {
-        Id = "102";
-        Name = "밧줄";
-        Rareness = false;
-        Stage = 1;
-    }
 }

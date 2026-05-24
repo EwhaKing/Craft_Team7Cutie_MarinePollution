@@ -1294,19 +1294,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5145079207238391847, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
   m_PrefabInstance: {fileID: 1838083179}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &697042695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 697042688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9d24a0453abb1d4f8bd53d3602f38eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerItemPicker
-  inventorySystem: {fileID: 1858186316}
 --- !u!1 &745343576
 GameObject:
   m_ObjectHideFlags: 0
@@ -2921,30 +2908,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2033763188232284336, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2033763188232284336, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
-      propertyPath: m_SortingOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4347887679594574458, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4609355168486763564, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5129244401760464344, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5129244401760464344, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5129244401760464344, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.89
@@ -2989,37 +2952,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5145079207238391847, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5994743851165644722, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7343962379043654345, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7471092598159799140, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8499330414474797314, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
-      propertyPath: m_SortingOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 9120141922037301986, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 8669919607791056911, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
+      propertyPath: inventorySystem
+      value: 
+      objectReference: {fileID: 1858186316}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5145079207238391847, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 697042695}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
 --- !u!1 &1842504345
 GameObject:

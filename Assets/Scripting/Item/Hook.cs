@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Hook : Equipment
 {
@@ -7,15 +8,12 @@ public class Hook : Equipment
         { "1", 3 }, // 철 조각 3개
         { "2", 1 }  // 밧줄 1개
     };
+    public override string Id => "101";
+    public override string Name => "갈고리";
 
+    public override bool Rareness => false;
+    public override int Stage => 1;
+    public override Sprite Icon => null;
     public override Dictionary<string, int> Recipe => Hookrecipe;
 
-
-    public Hook()
-    {
-        Id = "101";
-        Name = "밧줄";
-        Rareness = false;
-        Stage = 1;
-    }
 }

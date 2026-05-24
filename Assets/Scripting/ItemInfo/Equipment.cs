@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Equipment : Item
+public abstract class Equipment : Item
 {
-    public string Id { get; protected set; }
-    public string Name { get; protected set; }
-    public bool Rareness { get; protected set; }
-    public Sprite Icon { get; protected set; }
+    public abstract string Id { get; }
+    public abstract string Name { get; }
+    public abstract bool Rareness { get;}
+    public abstract Sprite Icon { get;}
 
-    public int Stage { get; protected set; }
+    public abstract int Stage { get; }
 
     // 제작에 필요한 재료
-    public virtual Dictionary<string, int> Recipe { get; protected set; }
-        = new Dictionary<string, int>();
+    public abstract Dictionary<string, int> Recipe { get;  }
+
 }

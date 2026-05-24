@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class InstantLight : Equipment
 {
@@ -9,14 +10,14 @@ public class InstantLight : Equipment
         {"10", 1}// 배터리 1개
     };
 
+    public override string Id => "109";
+    public override string Name => "간이 조명";
+
+    public override bool Rareness => false;
+    public override int Stage => 1;
+    public override Sprite Icon => null;
+
     public override Dictionary<string, int> Recipe => InstantLightrecipe;
 
 
-    public InstantLight()
-    {
-        Id = "109";
-        Name = "간이 조명";
-        Rareness = false;
-        Stage = 1;
-    }
 }

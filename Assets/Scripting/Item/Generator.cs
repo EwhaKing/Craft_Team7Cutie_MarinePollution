@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Generator : Equipment
 {
@@ -16,7 +17,18 @@ public class Generator : Equipment
         { "4", 5 }    // 기계 부품 ×5
     };
 
-    public override Dictionary<string, int> Recipe { get; protected set; }
+    private string id;
+    private string itemName;
+    private int stage;
+    private Dictionary<string, int> recipe;
+
+    public override string Id => id;
+    public override string Name => itemName;
+    public override Sprite Icon => null;
+
+    public override bool Rareness => false;
+    public override int Stage => stage;
+    public override Dictionary<string, int> Recipe => recipe;
 
     public string Description { get; private set; }
     public int MaxWorkingDeviceCount { get; private set; }
@@ -27,16 +39,15 @@ public class Generator : Equipment
 
     public Generator(int stage)
     {
-        Rareness = false;
-        Stage = stage;
-
-        if (Stage == 1)
+        if (stage == 1)
         {
-            Id = "104_1";
-            Name = "초기 발전기";
+            this.stage = 1;
+
+            id = "104_1";
+            itemName = "초기 발전기";
             Description = "지상 시설에 전기를 공급하는 초반용 발전기.";
 
-            Recipe = GeneratorStage1Recipe;
+            recipe = GeneratorStage1Recipe;
 
             CanUseDisassembler = true;
             CanUseLight = true;
@@ -44,13 +55,15 @@ public class Generator : Equipment
             FuelType = "나무";
             MaxFuelAmount = 10;
         }
-        else if (Stage == 2)
+        else if (stage == 2)
         {
-            Id = "104_2";
-            Name = "발전기2";
+            this.stage = 2;
+
+            id = "104_2";
+            itemName = "발전기2";
             Description = "출력이 향상된 중형 발전기.";
 
-            Recipe = GeneratorStage2Recipe;
+            recipe = GeneratorStage2Recipe;
 
             CanUseDisassembler = true;
             CanUseLight = true;
@@ -60,12 +73,13 @@ public class Generator : Equipment
         }
         else
         {
-            Id = "104_1";
-            Name = "초기 발전기";
+            this.stage = 1;
+
+            id = "104_1";
+            itemName = "초기 발전기";
             Description = "지상 시설에 전기를 공급하는 초반용 발전기.";
 
-            Stage = 1;
-            Recipe = GeneratorStage1Recipe;
+            recipe = GeneratorStage1Recipe;
 
             CanUseDisassembler = true;
             CanUseLight = true;
