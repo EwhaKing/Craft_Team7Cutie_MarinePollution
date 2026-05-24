@@ -4,6 +4,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    [Header("Player Control")]
+    public bool canPlayerControl = true;
+    
     [Header("Player")]
     public GameObject Player;
 
@@ -180,4 +183,23 @@ public class GameManager : MonoBehaviour
 
         Player.transform.position = playerPos;
     }
+    
+    public bool CanPlayerControl()
+    {
+        return canPlayerControl;
+    }
+
+    public void SetPlayerControl(bool canControl)
+    {
+        canPlayerControl = canControl;
+
+        Rigidbody2D rb = GetPlayerRigidbody2D();
+
+        if (rb != null && !canControl)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+    }
+    
+    
 }

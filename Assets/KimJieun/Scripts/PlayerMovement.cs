@@ -70,6 +70,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance != null && !GameManager.Instance.CanPlayerControl())
+        {
+            return;
+        }
+        
         if (Sea)
         {
             rb.gravityScale = 0f;
