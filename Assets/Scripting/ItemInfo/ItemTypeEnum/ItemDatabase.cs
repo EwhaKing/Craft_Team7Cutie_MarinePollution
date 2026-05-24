@@ -18,6 +18,9 @@ public static class ItemDatabase
         { MaterialList.CleanWater.Id, MaterialList.CleanWater },
         { MaterialList.Bubble.Id, MaterialList.Bubble },
         { MaterialList.NetPiece.Id, MaterialList.NetPiece },
+        
+        { new Rope().Id, new Rope() },
+        
     };
 
     public static Item GetItemById(string id)

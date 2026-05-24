@@ -14,7 +14,7 @@ public class Rope : Equipment
 
     public override bool Rareness => false;
     public override int Stage => 1;
-    public override Sprite Icon => null;
+    public override Sprite Icon => Resources.Load<Sprite>("ItemIcon/밧줄");
 
     public override Dictionary<string, int> Recipe => RopeRecipe;
 }
