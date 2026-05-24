@@ -42,6 +42,7 @@ public class ContainerManager : MonoBehaviour
         {
             if (previousFloor != currentFloor)
             {
+                CloseContainerPanel();
                 DisableAllFloorContainers();
                 previousFloor = currentFloor;
             }
@@ -77,7 +78,6 @@ public class ContainerManager : MonoBehaviour
     void OnFloorChanged(int currentFloor)
     {
         CloseContainerPanel();
-
         DisableAllFloorContainers();
 
         List<Container> currentFloorContainers = GetContainersByFloor(currentFloor);
@@ -93,16 +93,12 @@ public class ContainerManager : MonoBehaviour
         {
             case -1:
                 return floorB1Containers;
-
             case -2:
                 return floorB2Containers;
-
             case -3:
                 return floorB3Containers;
-
             case -4:
                 return floorB4Containers;
-
             default:
                 return null;
         }

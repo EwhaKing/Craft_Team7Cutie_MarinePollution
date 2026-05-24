@@ -17,8 +17,6 @@ public class Container : MonoBehaviour
 
     public void GiveFirstFunction()
     {
-        if (hasFirstFunction) return;
-
         hasFirstFunction = true;
         canClick = true;
 
@@ -27,8 +25,6 @@ public class Container : MonoBehaviour
 
     public void RemoveFirstFunction()
     {
-        if (!hasFirstFunction) return;
-
         hasFirstFunction = false;
         canClick = false;
 
