@@ -3441,6 +3441,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DroppedItem
       objectReference: {fileID: 0}
+    - target: {fileID: 5675171761286080929, guid: 680251263052aa94ba6bd730be6c5df1, type: 3}
+      propertyPath: itemId
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
