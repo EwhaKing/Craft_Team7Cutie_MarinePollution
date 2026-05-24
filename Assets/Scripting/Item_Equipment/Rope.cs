@@ -5,8 +5,8 @@ public class Rope : Equipment
 {
     private static readonly Dictionary<string, int> RopeRecipe = new Dictionary<string, int>
     {
-        { "1", 3 }, // 그물 조각 3개
-        { "2", 4 }  // 밧줄 4개
+        { "2", 3 }, // 그물 조각 3개
+        { "1", 1 }  // 금속조각 1개
     };
 
     public override string Id => "102";

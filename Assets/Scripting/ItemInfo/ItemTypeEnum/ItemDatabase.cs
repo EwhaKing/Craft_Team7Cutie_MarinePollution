@@ -3,25 +3,74 @@ using UnityEngine;
 
 public static class ItemDatabase
 {
-    private static readonly Dictionary<string, Item> itemsById = new Dictionary<string, Item>
+    private static readonly Dictionary<string, Item> itemsById = new Dictionary<string, Item>();
+
+    static ItemDatabase()
     {
-        { MaterialList.IronPiece.Id, MaterialList.IronPiece },
-        { MaterialList.Rope.Id, MaterialList.Rope },
-        { MaterialList.WoodPiece.Id, MaterialList.WoodPiece },
-        { MaterialList.MechanicalPiece.Id, MaterialList.MechanicalPiece },
-        { MaterialList.CopperLine.Id, MaterialList.CopperLine },
-        { MaterialList.Cloth.Id, MaterialList.Cloth },
-        { MaterialList.RubberPiece.Id, MaterialList.RubberPiece },
-        { MaterialList.GlassPiece.Id, MaterialList.GlassPiece },
-        { MaterialList.BatteryPiece.Id, MaterialList.BatteryPiece },
-        { MaterialList.CoralPiece.Id, MaterialList.CoralPiece },
-        { MaterialList.CleanWater.Id, MaterialList.CleanWater },
-        { MaterialList.Bubble.Id, MaterialList.Bubble },
-        { MaterialList.NetPiece.Id, MaterialList.NetPiece },
+        Register(MaterialList.IronPiece);
+        Register(MaterialList.Rope);
+        Register(MaterialList.WoodPiece);
+        Register(MaterialList.MechanicalPiece);
+        Register(MaterialList.CopperLine);
+        Register(MaterialList.Cloth);
+        Register(MaterialList.RubberPiece);
+        Register(MaterialList.GlassPiece);
+        Register(MaterialList.BatteryPiece);
+        Register(MaterialList.CoralPiece);
+        Register(MaterialList.CleanWater);
+        Register(MaterialList.Bubble);
+        Register(MaterialList.NetPiece);
+
+        // MaterialList.Rope와 new Rope()가 같은 아이템이면 둘 중 하나만 등록해야 합니다.
         
-        { new Rope().Id, new Rope() },
-        
-    };
+        Register(new Rope());
+
+        Register(new CollectingBag());
+        Register(new CoralGenerator());
+        Register(new CoralModerator());
+
+        Register(new Generator(1));
+        Register(new Generator(2));
+
+        Register(new Hook());
+        Register(new InstantLight());
+
+        Register(new OxygenBottle(1));
+        Register(new OxygenBottle(2));
+
+        Register(new SmallStorage());
+        Register(new Turbin());
+        Register(new OxygenGenerator());
+        Register(new WaterTank());
+        Register(new OxygenMerger());
+    }
+
+    private static void Register(Item item)
+    {
+        if (item == null)
+        {
+            Debug.LogWarning("[ItemDatabase] null 아이템은 등록할 수 없습니다.");
+            return;
+        }
+
+        if (string.IsNullOrEmpty(item.Id))
+        {
+            Debug.LogWarning($"[ItemDatabase] Id가 비어 있는 아이템입니다: {item.Name}");
+            return;
+        }
+
+        if (itemsById.ContainsKey(item.Id))
+        {
+            Debug.LogError(
+                $"[ItemDatabase] 중복 Id 발견: {item.Id}\n" +
+                $"기존 아이템: {itemsById[item.Id].Name}\n" +
+                $"새 아이템: {item.Name}"
+            );
+            return;
+        }
+
+        itemsById.Add(item.Id, item);
+    }
 
     public static Item GetItemById(string id)
     {
