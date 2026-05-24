@@ -1,14 +1,5 @@
 using UnityEngine;
 
-public enum ContainerType
-{
-    None,               // 아직 작업 없음
-    PowerPlant,         // 발전소
-    Storage,            // 창고
-    AdvancedPowerPlant, // 상급발전소
-    Aquarium            // 수족관
-}
-
 public class Container : MonoBehaviour
 {
     [Header("Container Info")]
@@ -17,7 +8,9 @@ public class Container : MonoBehaviour
 
     [Header("Container Job")]
     public bool hasJob = false;
-    public ContainerType containerType = ContainerType.None;
+
+    // 이제 ContainerType enum 대신 ID만 저장
+    public string containerId = "";
 
     private bool canClick = false;
 
@@ -51,12 +44,12 @@ public class Container : MonoBehaviour
         }
     }
 
-    public void SetJob(ContainerType type)
+    public void SetJob(string id)
     {
-        containerType = type;
+        containerId = id;
         hasJob = true;
 
-        Debug.Log($"Container 작업 부여됨: {GetContainerTypeName()}");
+        Debug.Log($"Container 작업 부여됨: {GetContainerTypeName()} / ID: {containerId}");
     }
 
     public void ExecuteContainerWork()
@@ -67,22 +60,26 @@ public class Container : MonoBehaviour
             return;
         }
 
-        switch (containerType)
+        switch (containerId)
         {
-            case ContainerType.PowerPlant:
+            case "C_1_1":
                 ExecutePowerPlantWork();
                 break;
 
-            case ContainerType.Storage:
+            case "C_2":
                 ExecuteStorageWork();
                 break;
 
-            case ContainerType.AdvancedPowerPlant:
+            case "C_1_2":
                 ExecuteAdvancedPowerPlantWork();
                 break;
 
-            case ContainerType.Aquarium:
+            case "C_3":
                 ExecuteAquariumWork();
+                break;
+
+            default:
+                Debug.LogWarning($"알 수 없는 Container ID입니다: {containerId}");
                 break;
         }
     }
@@ -109,18 +106,18 @@ public class Container : MonoBehaviour
 
     public string GetContainerTypeName()
     {
-        switch (containerType)
+        switch (containerId)
         {
-            case ContainerType.PowerPlant:
+            case "C_1_1":
                 return "발전소";
 
-            case ContainerType.Storage:
+            case "C_2":
                 return "창고";
 
-            case ContainerType.AdvancedPowerPlant:
+            case "C_1_2":
                 return "상급발전소";
 
-            case ContainerType.Aquarium:
+            case "C_3":
                 return "수족관";
 
             default:

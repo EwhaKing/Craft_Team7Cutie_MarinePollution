@@ -13,6 +13,8 @@ public class ContainerManager : MonoBehaviour
 
     [Header("UI")]
     public GameObject containerPanel;
+    public GameObject notJobPanel;
+    public GameObject afterJobPanel;
 
     private int previousFloor = 999;
     private Container selectedContainer;
@@ -29,6 +31,16 @@ public class ContainerManager : MonoBehaviour
         if (containerPanel != null)
         {
             containerPanel.SetActive(false);
+        }
+
+        if (notJobPanel != null)
+        {
+            notJobPanel.SetActive(false);
+        }
+
+        if (afterJobPanel != null)
+        {
+            afterJobPanel.SetActive(false);
         }
     }
 
@@ -93,12 +105,16 @@ public class ContainerManager : MonoBehaviour
         {
             case -1:
                 return floorB1Containers;
+
             case -2:
                 return floorB2Containers;
+
             case -3:
                 return floorB3Containers;
+
             case -4:
                 return floorB4Containers;
+
             default:
                 return null;
         }
@@ -146,7 +162,32 @@ public class ContainerManager : MonoBehaviour
             GameManager.Instance.SetPlayerControl(false);
         }
 
-        Debug.Log($"Container Panel 열림: B{Mathf.Abs(container.floor)}층 / {container.containerIndex}번");
+        RefreshContainerPanel();
+
+        if (container.hasJob)
+        {
+            container.ExecuteContainerWork();
+        }
+
+        Debug.Log(
+            $"Container Panel 열림: B{Mathf.Abs(container.floor)}층 / " +
+            $"{container.containerIndex}번 / {container.GetContainerTypeName()} / ID: {container.containerId}"
+        );
+    }
+
+    public void RefreshContainerPanel()
+    {
+        if (selectedContainer == null) return;
+
+        if (notJobPanel != null)
+        {
+            notJobPanel.SetActive(!selectedContainer.hasJob);
+        }
+
+        if (afterJobPanel != null)
+        {
+            afterJobPanel.SetActive(selectedContainer.hasJob);
+        }
     }
 
     public void CloseContainerPanel()
@@ -156,6 +197,16 @@ public class ContainerManager : MonoBehaviour
         if (containerPanel != null)
         {
             containerPanel.SetActive(false);
+        }
+
+        if (notJobPanel != null)
+        {
+            notJobPanel.SetActive(false);
+        }
+
+        if (afterJobPanel != null)
+        {
+            afterJobPanel.SetActive(false);
         }
 
         if (GameManager.Instance != null)
@@ -169,5 +220,36 @@ public class ContainerManager : MonoBehaviour
     public Container GetSelectedContainer()
     {
         return selectedContainer;
+    }
+
+    public void SetSelectedContainerJobPowerPlant()
+    {
+        SetSelectedContainerJob("C_1_1");
+    }
+
+    public void SetSelectedContainerJobStorage()
+    {
+        SetSelectedContainerJob("C_2");
+    }
+
+    public void SetSelectedContainerJobAdvancedPowerPlant()
+    {
+        SetSelectedContainerJob("C_1_2");
+    }
+
+    public void SetSelectedContainerJobAquarium()
+    {
+        SetSelectedContainerJob("C_3");
+    }
+
+    public void SetSelectedContainerJob(string id)
+    {
+        if (selectedContainer == null) return;
+
+        selectedContainer.SetJob(id);
+
+        RefreshContainerPanel();
+
+        selectedContainer.ExecuteContainerWork();
     }
 }
