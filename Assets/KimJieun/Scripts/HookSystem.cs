@@ -16,7 +16,7 @@ public class HookSystem : MonoBehaviour
     [Header("Layer Setting")]
     public LayerMask trashLayer;
 
-    private enum HookState
+    public enum HookState
     {
         Idle,
         Flying,
@@ -24,15 +24,20 @@ public class HookSystem : MonoBehaviour
         Returning,
     }
 
-    private HookState currentState = HookState.Idle;
+    public HookState currentState = HookState.Idle;
     private Vector2 targetPos;
     private Vector2 returnPos;
     private GameObject caughtTrash;
     private PlayerMovement playerMovement;
+
+    private PlayerItemPicker itemPicker;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
+        itemPicker = GetComponent<PlayerItemPicker>();
+
         hook.SetActive(false);
     }
 
@@ -135,7 +140,18 @@ public class HookSystem : MonoBehaviour
 
     void CollectTrash()
     {
-        //추후 인벤토리에 추가
+        DroppedItem droppedItem = caughtTrash.GetComponent<DroppedItem>();
+
+        if (droppedItem != null && itemPicker != null)
+        {
+            bool success = itemPicker.TryPickup(droppedItem.ItemId);
+            
+            if (!success)
+            {
+                Debug.Log("인벤토리가 가득 찼습니다!");
+            }
+        }
+
         caughtTrash.SetActive(false);
         caughtTrash = null;
 
