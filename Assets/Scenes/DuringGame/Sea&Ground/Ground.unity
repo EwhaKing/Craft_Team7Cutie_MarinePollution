@@ -2413,6 +2413,7 @@ GameObject:
   - component: {fileID: 381010200}
   - component: {fileID: 381010202}
   - component: {fileID: 381010201}
+  - component: {fileID: 381010203}
   m_Layer: 5
   m_Name: "\uC7A5\uBE44\uC7A5\uCC29"
   m_TagString: Untagged
@@ -2483,6 +2484,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 381010199}
   m_CullTransparentMesh: 1
+--- !u!114 &381010203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381010199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: febd1e09f94731b459889101ff03a5f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttachedEquippmentManager
+  equipmentSlots: []
+  inventoryCurrent: {fileID: 0}
+  bagPanel: {fileID: 0}
+  hasCollectingBag: 0
 --- !u!1 &388622881
 GameObject:
   m_ObjectHideFlags: 0
@@ -4221,6 +4238,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5145079207238391847, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
   m_PrefabInstance: {fileID: 1838083179}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &697042689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 697042688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e028e9481028bc941a17ab698c2e6570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::itemManagerPlayer
+  panel: {fileID: 1308216554}
 --- !u!1 &712997224
 GameObject:
   m_ObjectHideFlags: 0
@@ -7353,6 +7383,7 @@ GameObject:
   - component: {fileID: 1308216557}
   - component: {fileID: 1308216556}
   - component: {fileID: 1308216558}
+  - component: {fileID: 1308216559}
   m_Layer: 5
   m_Name: TabPanel
   m_TagString: Untagged
@@ -7434,8 +7465,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventoryFullPanelUI
   inventorySystem: {fileID: 1858186316}
   inventoryCurrent: {fileID: 4514447759112913546}
-  originSlotParent: {fileID: 1659309838}
-  bagSlotParent: {fileID: 1326616740}
+  originSlotParent: {fileID: 1326616740}
+  bagSlotParent: {fileID: 1659309838}
+--- !u!114 &1308216559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1308216554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: febd1e09f94731b459889101ff03a5f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttachedEquippmentManager
+  equipmentSlots:
+  - allowedItemIds:
+    - 105_1
+    - 105_2
+    slotObject: {fileID: 107385826}
+    iconRenderer: {fileID: 0}
+    equippedItemId: 
+  - allowedItemIds:
+    - 107
+    slotObject: {fileID: 244245950}
+    iconRenderer: {fileID: 0}
+    equippedItemId: 
+  - allowedItemIds:
+    - 106
+    slotObject: {fileID: 498333641}
+    iconRenderer: {fileID: 0}
+    equippedItemId: 
+  - allowedItemIds:
+    - 109
+    slotObject: {fileID: 945660980}
+    iconRenderer: {fileID: 0}
+    equippedItemId: 
+  - allowedItemIds:
+    - 101
+    slotObject: {fileID: 1792825226}
+    iconRenderer: {fileID: 0}
+    equippedItemId: 
+  inventoryCurrent: {fileID: 4514447759112913546}
+  bagPanel: {fileID: 1659309837}
+  hasCollectingBag: 0
 --- !u!1 &1308460858
 GameObject:
   m_ObjectHideFlags: 0
@@ -10252,7 +10325,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5145079207238391847, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 697042689}
   m_SourcePrefab: {fileID: 100100000, guid: c95d3f381cc9ab94abfd99b93bf863d1, type: 3}
 --- !u!1 &1842504345
 GameObject:
@@ -11391,6 +11467,10 @@ PrefabInstance:
     - target: {fileID: 4184863126363248703, guid: 680251263052aa94ba6bd730be6c5df1, type: 3}
       propertyPath: m_Name
       value: DroppedItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 4184863126363248703, guid: 680251263052aa94ba6bd730be6c5df1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5675171761286080929, guid: 680251263052aa94ba6bd730be6c5df1, type: 3}
       propertyPath: itemId
