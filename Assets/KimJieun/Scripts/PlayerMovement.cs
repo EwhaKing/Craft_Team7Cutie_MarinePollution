@@ -172,6 +172,16 @@ public class PlayerMovement : MonoBehaviour
         {
             if (armPivot == null) return;
 
+            if (hookSystem != null && hookSystem.currentState == HookSystem.HookState.Returning)
+            {
+                return;
+            }
+
+            if (hookSystem != null && hookSystem.currentState == HookSystem.HookState.Flying)
+            {
+                return;
+            }
+            
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             Vector2 direction = mousePos - (Vector2)armPivot.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
