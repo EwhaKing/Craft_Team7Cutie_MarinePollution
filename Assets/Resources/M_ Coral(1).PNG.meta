@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 53aaf32de0739df45b0174cad2aaf078
+guid: 848229c5a9d754446af41585388b7b18
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8457688128998239237
-    second: Question_0
+      213: 6664486217588143447
+    second: M_ Coral(1)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Question_0
+      name: M_ Coral(1)_0
       rect:
         serializedVersion: 2
-        x: 10
-        y: 3
-        width: 49
-        height: 62
+        x: 823
+        y: 644
+        width: 403
+        height: 761
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 50c6af5ea8ebf5570800000000000000
-      internalID: 8457688128998239237
+      spriteID: 755f3d9a7e20d7c50800000000000000
+      internalID: 6664486217588143447
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Question_0: 8457688128998239237
+      M_ Coral(1)_0: 6664486217588143447
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

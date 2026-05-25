@@ -85,6 +85,16 @@ public class ItemBoxUI : MonoBehaviour
         itemImage.enabled = item.Icon != null;
         itemImage.preserveAspect = true;
         itemImage.color = Color.white;
+
+        // 이미지가 있으면 x, y 방향으로 3배
+        if (item.Icon != null)
+        {
+            itemImage.transform.localScale = new Vector3(3f, 3f, 1f);
+        }
+        else
+        {
+            itemImage.transform.localScale = Vector3.one;
+        }
     }
 
     private void ApplyCount(int count)
@@ -104,6 +114,9 @@ public class ItemBoxUI : MonoBehaviour
         {
             itemImage.sprite = null;
             itemImage.enabled = false;
+
+            // 이미지가 없으면 scale 1배로 복구
+            itemImage.transform.localScale = Vector3.one;
         }
 
         if (countText != null)

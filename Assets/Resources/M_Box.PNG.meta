@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e7a860145fee4be4896bb644ce732556
+guid: 4af2a6bb33fd2294abe71bfe3b49d9ab
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1522341970679022018
-    second: Thumbs up_0
+      213: -4179367251713684817
+    second: M_Box(1)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Thumbs up_0
+      name: M_Box(1)_0
       rect:
         serializedVersion: 2
-        x: 10
-        y: 6
-        width: 53
-        height: 58
+        x: 726
+        y: 721
+        width: 595
+        height: 605
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2c1cdf4e4f1702510800000000000000
-      internalID: 1522341970679022018
+      spriteID: faa84b7b0a7eff5c0800000000000000
+      internalID: -4179367251713684817
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Thumbs up_0: 1522341970679022018
+      M_Box(1)_0: -4179367251713684817
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

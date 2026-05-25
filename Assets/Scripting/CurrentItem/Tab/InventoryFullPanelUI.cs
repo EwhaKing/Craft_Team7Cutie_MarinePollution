@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryFullPanelUI : MonoBehaviour
@@ -7,12 +6,14 @@ public class InventoryFullPanelUI : MonoBehaviour
     [SerializeField] private InventorySystem inventorySystem;
     [SerializeField] private InventoryCurrent inventoryCurrent;
 
-    [Header("Slot Parents")]
-    [SerializeField] private Transform originSlotParent;
-    [SerializeField] private Transform bagSlotParent;
+    [Header("Original Slots")]
+    [SerializeField] private ItemBoxUI[] originalSlotUIs;
 
-    private readonly List<ItemBoxUI> originSlotUIs = new List<ItemBoxUI>();
-    private readonly List<ItemBoxUI> bagSlotUIs = new List<ItemBoxUI>();
+    [Header("Bag Slots")]
+    [SerializeField] private ItemBoxUI[] bagSlotUIs;
+
+    [Header("Bag Parent")]
+    [SerializeField] private GameObject bagSlotParent;
 
     private void Awake()
     {
@@ -21,13 +22,10 @@ public class InventoryFullPanelUI : MonoBehaviour
 
         if (inventoryCurrent == null)
             inventoryCurrent = FindFirstObjectByType<InventoryCurrent>();
-
-        CollectSlots();
     }
 
     private void OnEnable()
     {
-        CollectSlots();
         Refresh();
     }
 
@@ -51,48 +49,22 @@ public class InventoryFullPanelUI : MonoBehaviour
         RefreshBagSlots();
     }
 
-    private void CollectSlots()
+    private void RefreshOriginalSlots()
     {
-        originSlotUIs.Clear();
-        bagSlotUIs.Clear();
-
-        CollectChildSlots(originSlotParent, originSlotUIs, "OriginalSlot");
-        CollectChildSlots(bagSlotParent, bagSlotUIs, "BagSlot");
-
-        Debug.Log(
-            "[InventoryFullPanelUI] 슬롯 자동 등록 완료" +
-            "\nOriginal Slot Count: " + originSlotUIs.Count +
-            "\nBag Slot Count: " + bagSlotUIs.Count,
-            this
-        );
-    }
-
-    private void CollectChildSlots(
-        Transform parent,
-        List<ItemBoxUI> list,
-        string parentName
-    )
-    {
-        if (parent == null)
+        if (originalSlotUIs == null)
         {
-            Debug.LogError("[InventoryFullPanelUI] " + parentName + " Parent가 연결되지 않았습니다.", this);
+            Debug.LogError("[InventoryFullPanelUI] originalSlotUIs가 연결되지 않았습니다.", this);
             return;
         }
 
-        ItemBoxUI[] slots = parent.GetComponentsInChildren<ItemBoxUI>(true);
-
-        for (int i = 0; i < slots.Length; i++)
+        for (int i = 0; i < originalSlotUIs.Length; i++)
         {
-            list.Add(slots[i]);
-        }
-    }
+            if (originalSlotUIs[i] == null)
+            {
+                Debug.LogError("[InventoryFullPanelUI] originalSlotUIs[" + i + "]가 비어 있습니다.", this);
+                continue;
+            }
 
-    private void RefreshOriginalSlots()
-    {
-        int count = Mathf.Min(originSlotUIs.Count, InventoryCurrent.OriginalSlotSize);
-
-        for (int i = 0; i < count; i++)
-        {
             ItemStack stack = null;
 
             if (inventoryCurrent.CurrentOriginalSlot != null &&
@@ -104,7 +76,17 @@ public class InventoryFullPanelUI : MonoBehaviour
             if (IsEmptyStack(stack))
                 stack = null;
 
-            originSlotUIs[i].Setup(
+            Debug.Log(
+                "[InventoryFullPanelUI] OriginalSlot 반영" +
+                "\nIndex: " + i +
+                "\nUI Object: " + originalSlotUIs[i].gameObject.name +
+                "\nStack null?: " + (stack == null) +
+                "\nItem Name: " + (stack != null && stack.Item != null ? stack.Item.Name : "NULL") +
+                "\nCount: " + (stack != null ? stack.Count.ToString() : "NULL"),
+                originalSlotUIs[i]
+            );
+
+            originalSlotUIs[i].Setup(
                 inventorySystem,
                 SelectedArea.Slot,
                 i,
@@ -118,15 +100,25 @@ public class InventoryFullPanelUI : MonoBehaviour
         bool bagOpen = inventoryCurrent.IsBagOpen;
 
         if (bagSlotParent != null)
-            bagSlotParent.gameObject.SetActive(bagOpen);
+            bagSlotParent.SetActive(bagOpen);
+
+        if (bagSlotUIs == null)
+        {
+            Debug.LogError("[InventoryFullPanelUI] bagSlotUIs가 연결되지 않았습니다.", this);
+            return;
+        }
 
         if (!bagOpen)
             return;
 
-        int count = Mathf.Min(bagSlotUIs.Count, InventoryCurrent.MaxBagSize);
-
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < bagSlotUIs.Length; i++)
         {
+            if (bagSlotUIs[i] == null)
+            {
+                Debug.LogError("[InventoryFullPanelUI] bagSlotUIs[" + i + "]가 비어 있습니다.", this);
+                continue;
+            }
+
             ItemStack stack = null;
 
             if (inventoryCurrent.CurrentBag != null &&

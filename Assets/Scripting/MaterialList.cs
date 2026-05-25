@@ -6,13 +6,13 @@ public static class MaterialList
         new MaterialItem("1", "철 조각", false, null);
 
     public static readonly Item Rope =
-        new MaterialItem("2", "밧줄", false, null);
+        new MaterialItem("2", "밧줄", false, Resources.Load<Sprite>("Tether"));
 
     public static readonly Item WoodPiece =
-        new MaterialItem("3", "나무 조각", false, Resources.Load<Sprite>("ItemIcon/나무 조각"));
+        new MaterialItem("3", "나무 조각", false, Resources.Load<Sprite>("P_Wood"));
 
     public static readonly Item MechanicalPiece =
-        new MaterialItem("4", "기계 부품", false, null);
+        new MaterialItem("4", "기계 부품", false, Resources.Load<Sprite>("P_Component"));
 
     public static readonly Item CopperLine =
         new MaterialItem("5", "구리선", false, null);
@@ -21,10 +21,10 @@ public static class MaterialList
         new MaterialItem("6", "천 조각", false, null);
 
     public static readonly Item RubberPiece =
-        new MaterialItem("7", "고무 조각", false, null);
+        new MaterialItem("7", "고무 조각", false, Resources.Load<Sprite>("P_Rubber"));
 
     public static readonly Item GlassPiece =
-        new MaterialItem("8", "유리 조각", false, null);
+        new MaterialItem("8", "유리 조각", false, Resources.Load<Sprite>("P_Glass"));
 
     public static readonly Item BatteryPiece =
         new MaterialItem("9", "배터리", false, null);
