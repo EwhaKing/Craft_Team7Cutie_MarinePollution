@@ -19,6 +19,7 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private ItemBoxUI[] bagSlotUIs;
 
     [SerializeField] private ItemPanelUI itemPanelUI;
+    [SerializeField] private InventoryFullPanelUI inventoryFullPanelUI;
     
     private SelectedArea selectedArea = SelectedArea.None;
     private int selectedIndex = -1;
@@ -644,6 +645,16 @@ public class InventorySystem : MonoBehaviour
         else
         {
             Debug.LogWarning("[InventorySystem] itemPanelUI가 연결되지 않았습니다.", this);
+        }
+
+        if (inventoryFullPanelUI != null)
+        {
+            Debug.Log("[InventorySystem] inventoryFullPanelUI.Refresh 호출", inventoryFullPanelUI);
+            inventoryFullPanelUI.Refresh();
+        }
+        else
+        {
+            Debug.LogWarning("[InventorySystem] inventoryFullPanelUI가 연결되지 않았습니다.", this);
         }
     }
 }

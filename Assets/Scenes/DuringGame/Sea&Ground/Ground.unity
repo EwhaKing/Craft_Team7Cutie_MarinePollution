@@ -15932,7 +15932,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemBoxUI
   itemImage: {fileID: 1384072555}
   countText: {fileID: 0}
-  button: {fileID: 0}
+  button: {fileID: 1202704195}
 --- !u!114 &1202704195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18190,7 +18190,7 @@ MonoBehaviour:
   - {fileID: 1123198422}
   - {fileID: 1241443535}
   - {fileID: 1328463094}
-  bagSlotParent: {fileID: 1659309838}
+  bagSlotParent: {fileID: 1659309837}
 --- !u!114 &1308216559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26220,9 +26220,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f03a641b35af5a64bb90170bae48b315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemBoxUI
-  itemImage: {fileID: 0}
-  countText: {fileID: 0}
-  button: {fileID: 0}
+  itemImage: {fileID: 1678276270}
+  countText: {fileID: 1439923865}
+  button: {fileID: 1959684746}
 --- !u!114 &1959684746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27996,6 +27996,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1350186154}
     m_Modifications:
+    - target: {fileID: 544840530316810881, guid: 6f19631ec5d785b4eaa06175cb650f4f, type: 3}
+      propertyPath: itemPanelUI
+      value: 
+      objectReference: {fileID: 4514447759112913547}
+    - target: {fileID: 544840530316810881, guid: 6f19631ec5d785b4eaa06175cb650f4f, type: 3}
+      propertyPath: inventoryFullPanelUI
+      value: 
+      objectReference: {fileID: 1308216558}
+    - target: {fileID: 544840530316810881, guid: 6f19631ec5d785b4eaa06175cb650f4f, type: 3}
+      propertyPath: bagSlotUIs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1648406497059616550, guid: 6f19631ec5d785b4eaa06175cb650f4f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -28100,6 +28112,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d35db57d35d5b4478e0ba7040cc37b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryCurrent
+--- !u!114 &4514447759112913547 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 870406898231245893, guid: 6f19631ec5d785b4eaa06175cb650f4f, type: 3}
+  m_PrefabInstance: {fileID: 4514447759112913545}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfdba46124dd4de4c9f27ec8987db099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemPanelUI
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
