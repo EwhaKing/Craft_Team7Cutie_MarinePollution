@@ -152,6 +152,11 @@ public class HookSystem : MonoBehaviour
             }
         }
 
+        if (OceanManager.Instance != null)
+        {
+            OceanManager.Instance.OnTrashCollected();
+        }
+
         caughtTrash.SetActive(false);
         caughtTrash = null;
 

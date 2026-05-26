@@ -48,5 +48,6 @@ public class BubbleSpawner : MonoBehaviour
         Vector3 pos = spawnPoint != null ? spawnPoint.position : transform.position;
         
         GameObject bubble = Instantiate(bubblePrefab, pos, transform.rotation);
+        bubble.layer = LayerMask.NameToLayer("Trash");
     }
 }
