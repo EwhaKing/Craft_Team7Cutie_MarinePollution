@@ -3,10 +3,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private Animator animator;
+    private string currentAnim;
+    
     [Header("SeaOrGroundMode")] 
     public bool Sea = false;
     public bool Ground = true;
-    
+    private Vector2 lastMoveDir = Vector2.right;
     
     [Header("Movement Setting")]
     public bool canMoveHorizontal = true;
@@ -18,6 +21,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Hook State")]
     [SerializeField] public bool _isHookMode = false; //정혜교 땅 모드
 
+    
+    [Header("Equipment")]
+    public AttachedEquippmentManager equipmentManager;
 
 
     public bool isHookMode
@@ -47,24 +53,10 @@ public class PlayerMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        sr = bodySr;
+        sr = bodySr != null ? bodySr : GetComponentInChildren<SpriteRenderer>();
         hookSystem = GetComponent<HookSystem>();
-        
-        if (Sea == true)
-        {
-            isHookMode = false;
-        }
-        else {
-            //sea가 false일때 실행할 코드
-            rb.gravityScale = 9.8f;
-            canMoveVertical = false;
-            
-            if (arm != null) arm.SetActive(false);
-            if (hook != null) hook.SetActive(false);
-
-        }
-
     }
 
     // Update is called once per frame
@@ -99,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             HandleMovement();
-            HandleFlipByKey();
+
                 
         }
 
@@ -108,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
             //Sea가 false면 실행될 코드
             // 땅모드
             HandleMovement();
-            HandleFlipByKey();
+
 
             if (arm != null) arm.SetActive(false);
             if (hook != null) hook.SetActive(false);
@@ -133,14 +125,22 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            // 땅모드에서는 위아래 이동 금지
             moveInput.y = 0f;
         }
 
         if (!canMoveHorizontal) moveInput.x = 0f;
         if (!canMoveVertical) moveInput.y = 0f;
 
+        moveInput = moveInput.normalized;
+
+        if (moveInput.sqrMagnitude > 0.01f)
+        {
+            lastMoveDir = moveInput;
+        }
+
         rb.linearVelocity = moveInput * moveSpeed;
+
+        HandleAnimation(moveInput);
     }
 
     void HandleFlipByKey()
@@ -194,6 +194,54 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void PlayAnim(string animName)
+    {
+        if (animator == null) return;
+        if (currentAnim == animName) return;
 
+        animator.Play(animName, 0, 0f);
+        currentAnim = animName;
+
+        Debug.Log("PlayAnim 호출됨: " + animName);
+    }
+    
+    void HandleAnimation(Vector2 moveInput)
+    {
+        bool isMoving = moveInput.sqrMagnitude > 0.01f;
+        bool hasWetSuit = equipmentManager != null && equipmentManager.HasWetSuit();
+
+        if (!isMoving)
+            return;
+
+        Vector2 dir = moveInput;
+
+        string animName;
+
+        if (Sea)
+        {
+            if (hasWetSuit)
+            {
+                if (Mathf.Abs(dir.x) >= Mathf.Abs(dir.y))
+                    animName = dir.x > 0 ? "Swim_Right_Suit" : "Swim_left_Suit";
+                else
+                    animName = dir.y > 0 ? "Swim_Up_Suit" : "Swim_Down_Suit";
+            }
+            else
+            {
+                if (Mathf.Abs(dir.x) >= Mathf.Abs(dir.y))
+                    animName = dir.x > 0 ? "Swim_R_No" : "Swim_L_No";
+                else
+                    animName = dir.y > 0 ? "Swimming_Up_No" : "Swimming_Down_No";
+            }
+        }
+        else
+        {
+            animName = dir.x >= 0 ? "Walk_R_NoSuit" : "Walk_L_NoSuit";
+        }
+
+        Debug.Log($"moveInput: {moveInput}, animName: {animName}, currentAnim: {currentAnim}");
+
+        PlayAnim(animName);
+    }
 
 }

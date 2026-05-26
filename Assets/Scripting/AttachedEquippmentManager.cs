@@ -172,4 +172,22 @@ public class AttachedEquippmentManager : MonoBehaviour
 
         return null;
     }
+    
+    public bool IsEquipped(string itemId)
+    {
+        foreach (EquipmentSlot slot in equipmentSlots)
+        {
+            if (slot.equippedItemId == itemId)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool HasWetSuit()
+    {
+        return IsEquipped("107");
+    }
 }
