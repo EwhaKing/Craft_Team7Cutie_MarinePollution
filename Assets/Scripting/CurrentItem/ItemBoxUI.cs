@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
-public class ItemBoxUI : MonoBehaviour
+public class ItemBoxUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [Header("UI")]
     [SerializeField] private Image itemImage;
@@ -14,8 +15,25 @@ public class ItemBoxUI : MonoBehaviour
     private int index;
     private ItemStack currentStack;
 
+    private Canvas rootCanvas;
+    private RectTransform rectTransform;
+    private CanvasGroup canvasGroup;
+    private Vector2 originalPosition;
+
+    public InventorySystem Inventory => inventory;
+    public SelectedArea Area => area;
+    public int Index => index;
+    public ItemStack CurrentStack => currentStack;
+
     private void Awake()
     {
+        rectTransform = GetComponent<RectTransform>();
+        rootCanvas = GetComponentInParent<Canvas>();
+        canvasGroup = GetComponent<CanvasGroup>();
+
+        if (canvasGroup == null)
+            canvasGroup = gameObject.AddComponent<CanvasGroup>();
+
         if (button == null)
             button = GetComponent<Button>();
 
@@ -73,20 +91,12 @@ public class ItemBoxUI : MonoBehaviour
             return;
         }
 
-        Debug.Log(
-            "[ItemBoxUI] ApplyItemImage / " +
-            "itemImage GameObject: " + itemImage.gameObject.name +
-            " / sprite: " + (item.Icon == null ? "null" : item.Icon.name),
-            this
-        );
-
         itemImage.gameObject.SetActive(true);
         itemImage.sprite = item.Icon;
         itemImage.enabled = item.Icon != null;
         itemImage.preserveAspect = true;
         itemImage.color = Color.white;
 
-        // 이미지가 있으면 x, y 방향으로 3배
         if (item.Icon != null)
         {
             itemImage.transform.localScale = new Vector3(3f, 3f, 1f);
@@ -114,8 +124,6 @@ public class ItemBoxUI : MonoBehaviour
         {
             itemImage.sprite = null;
             itemImage.enabled = false;
-
-            // 이미지가 없으면 scale 1배로 복구
             itemImage.transform.localScale = Vector3.one;
         }
 
@@ -134,5 +142,41 @@ public class ItemBoxUI : MonoBehaviour
         {
             inventory.SelectItem(area, index);
         }
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        if (currentStack == null || currentStack.Item == null || currentStack.Count <= 0)
+            return;
+
+        originalPosition = rectTransform.anchoredPosition;
+
+        canvasGroup.alpha = 0.6f;
+        canvasGroup.blocksRaycasts = false;
+
+        transform.SetAsLastSibling();
+
+        Debug.Log("[ItemBoxUI] 드래그 시작: " + currentStack.Item.Id, this);
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (currentStack == null || currentStack.Item == null || currentStack.Count <= 0)
+            return;
+
+        if (rootCanvas == null)
+            return;
+
+        rectTransform.anchoredPosition += eventData.delta / rootCanvas.scaleFactor;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        canvasGroup.alpha = 1f;
+        canvasGroup.blocksRaycasts = true;
+
+        rectTransform.anchoredPosition = originalPosition;
+
+        Debug.Log("[ItemBoxUI] 드래그 종료", this);
     }
 }

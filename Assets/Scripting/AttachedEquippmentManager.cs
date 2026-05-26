@@ -38,14 +38,18 @@ public class AttachedEquippmentManager : MonoBehaviour
     }
 #endif
 
-    public void EquipItem(string itemId)
+    public bool EquipItem(string itemId)
     {
+        Debug.Log("[AttachedEquipment] EquipItem 호출됨: " + itemId, this);
+
         EquipmentSlot targetSlot = FindSlotByItemId(itemId);
+
+        Debug.Log("[AttachedEquipment] targetSlot null?: " + (targetSlot == null), this);
 
         if (targetSlot == null)
         {
             Debug.LogWarning("이 아이템 ID는 장착할 수 없습니다: " + itemId, this);
-            return;
+            return false;
         }
 
         targetSlot.equippedItemId = itemId;
@@ -53,20 +57,24 @@ public class AttachedEquippmentManager : MonoBehaviour
         if (targetSlot.slotObject != null)
         {
             targetSlot.slotObject.SetActive(true);
+            Debug.Log("[AttachedEquipment] slotObject 활성화: " + targetSlot.slotObject.name, targetSlot.slotObject);
+        }
+        else
+        {
+            Debug.LogWarning("[AttachedEquipment] targetSlot.slotObject가 null입니다.", this);
         }
 
-        // 아이템 아이콘 교체 부분
-        // string iconPath = itemData.iconPath;
-        // Sprite iconSprite = Resources.Load<Sprite>(iconPath);
-        // targetSlot.iconRenderer.sprite = iconSprite;
+        Debug.Log("[AttachedEquipment] IsCollectingBagItem?: " + IsCollectingBagItem(itemId), this);
 
         if (IsCollectingBagItem(itemId))
         {
             hasCollectingBag = true;
+            Debug.Log("[AttachedEquipment] hasCollectingBag = true", this);
             ApplyBagState();
         }
 
         Debug.Log(itemId + " 아이템을 장착했습니다.", this);
+        return true;
     }
 
     public void UnequipItem(string itemId)
@@ -102,9 +110,19 @@ public class AttachedEquippmentManager : MonoBehaviour
 
     private void ApplyBagState()
     {
+        Debug.Log(
+            "[AttachedEquipment] ApplyBagState 호출\n" +
+            "hasCollectingBag: " + hasCollectingBag + "\n" +
+            "bagPanel null?: " + (bagPanel == null) + "\n" +
+            "bagPanel name: " + (bagPanel != null ? bagPanel.name : "NULL") + "\n" +
+            "inventoryCurrent null?: " + (inventoryCurrent == null),
+            this
+        );
+
         if (bagPanel != null)
         {
             bagPanel.SetActive(hasCollectingBag);
+            Debug.Log("[AttachedEquipment] bagPanel activeSelf: " + bagPanel.activeSelf, bagPanel);
         }
 
         if (inventoryCurrent == null)
@@ -124,9 +142,8 @@ public class AttachedEquippmentManager : MonoBehaviour
 
     private bool IsCollectingBagItem(string itemId)
     {
-        return itemId == "107_1" || itemId == "107_2" || itemId == "107";
+        return itemId == "106";
     }
-
     private EquipmentSlot FindSlotByItemId(string itemId)
     {
         foreach (EquipmentSlot slot in equipmentSlots)

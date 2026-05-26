@@ -607,6 +607,40 @@ public class InventorySystem : MonoBehaviour
         selectedArea = SelectedArea.None;
         selectedIndex = -1;
     }
+    public void RemoveStackAt(SelectedArea area, int index)
+    {
+        if (inventoryCurrent == null)
+            return;
+
+        if (area == SelectedArea.Slot)
+        {
+            if (inventoryCurrent.CurrentOriginalSlot == null)
+                return;
+
+            if (index < 0 || index >= inventoryCurrent.CurrentOriginalSlot.Length)
+                return;
+
+            inventoryCurrent.CurrentOriginalSlot[index] = null;
+        }
+        else if (area == SelectedArea.Bag)
+        {
+            if (inventoryCurrent.CurrentBag == null)
+                return;
+
+            if (index < 0 || index >= inventoryCurrent.CurrentBag.Length)
+                return;
+
+            inventoryCurrent.CurrentBag[index] = null;
+        }
+        else
+        {
+            return;
+        }
+
+        inventoryCurrent.SyncCurrentSlot();
+        RefreshUI();
+    }
+    
     public void RefreshUI()
     {
         if (inventoryCurrent == null)
@@ -657,4 +691,36 @@ public class InventorySystem : MonoBehaviour
             Debug.LogWarning("[InventorySystem] inventoryFullPanelUI가 연결되지 않았습니다.", this);
         }
     }
+    
+    public ItemStack GetStack(SelectedArea area, int index)
+    {
+        if (inventoryCurrent == null)
+            return null;
+
+        if (area == SelectedArea.Slot)
+        {
+            if (inventoryCurrent.CurrentOriginalSlot == null)
+                return null;
+
+            if (index < 0 || index >= inventoryCurrent.CurrentOriginalSlot.Length)
+                return null;
+
+            return inventoryCurrent.CurrentOriginalSlot[index];
+        }
+
+        if (area == SelectedArea.Bag)
+        {
+            if (inventoryCurrent.CurrentBag == null)
+                return null;
+
+            if (index < 0 || index >= inventoryCurrent.CurrentBag.Length)
+                return null;
+
+            return inventoryCurrent.CurrentBag[index];
+        }
+
+        return null;
+    }
+
+
 }
