@@ -55,11 +55,31 @@ public class GameManager : MonoBehaviour
             Player = GameObject.FindWithTag("Player");
         }
 
+        if (Player != null)
+        {
+            PlayerMovement playerMovement = Player.GetComponent<PlayerMovement>();
+
+            if (playerMovement != null)
+            {
+                playerMovement.Sea = false;
+                playerMovement.Ground = true;
+
+                Rigidbody2D playerRb = Player.GetComponent<Rigidbody2D>();
+                if (playerRb != null)
+                {
+                    playerRb.gravityScale = 1f;
+                    playerRb.linearVelocity = Vector2.zero;
+                }
+
+                Debug.Log("씬 시작: PlayerMovement Sea 비활성화, Ground 활성화");
+            }
+        }
+
         if (mainCamera == null)
         {
             mainCamera = Camera.main;
         }
-        
+    
         if (mainCamera != null)
         {
             initialCameraPosition = mainCamera.transform.position;
@@ -296,6 +316,35 @@ public class GameManager : MonoBehaviour
         }
 
         panel.SetActive(true);
+    }
+    
+    public void CloseMergerPanel()
+    {
+        if (mergerPanel != null)
+        {
+            mergerPanel.SetActive(false);
+        }
+    }
+
+    public void CloseDissemblerPanel()
+    {
+        if (dissemblerPanel != null)
+        {
+            dissemblerPanel.SetActive(false);
+        }
+    }
+
+    public void CloseAllInteractionPanels()
+    {
+        if (mergerPanel != null)
+        {
+            mergerPanel.SetActive(false);
+        }
+
+        if (dissemblerPanel != null)
+        {
+            dissemblerPanel.SetActive(false);
+        }
     }
 
 
