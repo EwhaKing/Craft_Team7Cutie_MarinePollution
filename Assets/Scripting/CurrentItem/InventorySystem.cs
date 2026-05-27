@@ -156,6 +156,39 @@ public class InventorySystem : MonoBehaviour
 
         return true;
     }
+    
+    public int AddItemStackAndReturnLeftover(ItemStack incomingStack)
+    {
+        if (inventoryCurrent == null)
+        {
+            Debug.LogError("[InventorySystem] AddItemStackAndReturnLeftover 실패: inventoryCurrent가 null입니다.", this);
+            return incomingStack != null ? incomingStack.Count : 0;
+        }
+
+        if (incomingStack == null || incomingStack.Item == null || incomingStack.Count <= 0)
+        {
+            return 0;
+        }
+
+        ItemStack stackToAdd = new ItemStack(
+            incomingStack.Item,
+            incomingStack.Count,
+            incomingStack.Icon,
+            incomingStack.MaxStack
+        );
+
+        AddStackToArray(inventoryCurrent.CurrentOriginalSlot, stackToAdd);
+
+        if (stackToAdd.Count > 0)
+        {
+            AddStackToArray(inventoryCurrent.CurrentBag, stackToAdd);
+        }
+
+        inventoryCurrent.SyncCurrentSlot();
+        RefreshUI();
+
+        return stackToAdd.Count;
+    }
     public bool AddItemById(string itemId)
     {
         if (string.IsNullOrEmpty(itemId))

@@ -15,7 +15,7 @@ public class InstantLight : Equipment
 
     public override bool Rareness => false;
     public override int Stage => 1;
-    public override Sprite Icon => null;
+    public override Sprite Icon => Resources.Load<Sprite>("M_Light");
 
     public override Dictionary<string, int> Recipe => InstantLightrecipe;
 

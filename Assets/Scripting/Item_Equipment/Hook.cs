@@ -13,7 +13,7 @@ public class Hook : Equipment
 
     public override bool Rareness => false;
     public override int Stage => 1;
-    public override Sprite Icon => null;
+    public override Sprite Icon => Resources.Load<Sprite>("Hook");
     public override Dictionary<string, int> Recipe => Hookrecipe;
 
 }

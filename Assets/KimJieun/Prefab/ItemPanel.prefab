@@ -1426,8 +1426,10 @@ MonoBehaviour:
   - {fileID: 3948416194847700808}
   - {fileID: 6949401585030714925}
   - {fileID: 9129060653696123512}
-  bagSlotUIs: []
-  itemPanelUI: {fileID: 0}
+  bagSlotUIs:
+  - {fileID: 0}
+  itemPanelUI: {fileID: 870406898231245893}
+  inventoryFullPanelUI: {fileID: 0}
 --- !u!114 &870406898231245893
 MonoBehaviour:
   m_ObjectHideFlags: 0
