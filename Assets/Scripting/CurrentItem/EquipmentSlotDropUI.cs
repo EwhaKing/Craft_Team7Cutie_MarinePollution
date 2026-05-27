@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class EquipmentSlotDropUI : MonoBehaviour, IDropHandler
 {
@@ -12,7 +13,18 @@ public class EquipmentSlotDropUI : MonoBehaviour, IDropHandler
     {
         Debug.Log("[EquipmentSlotDropUI] OnDrop 호출됨", this);
 
-        ItemBoxUI draggedSlot = eventData.pointerDrag?.GetComponentInParent<ItemBoxUI>();
+        if (eventData.pointerDrag == null)
+        {
+            Debug.LogWarning("[EquipmentSlotDropUI] pointerDrag가 null입니다.", this);
+            return;
+        }
+
+        ItemBoxUI draggedSlot = eventData.pointerDrag.GetComponent<ItemBoxUI>();
+
+        if (draggedSlot == null)
+        {
+            draggedSlot = eventData.pointerDrag.GetComponentInParent<ItemBoxUI>();
+        }
 
         if (draggedSlot == null)
         {
@@ -28,10 +40,21 @@ public class EquipmentSlotDropUI : MonoBehaviour, IDropHandler
             return;
         }
 
+        if (draggedSlot.Inventory == null)
+        {
+            Debug.LogWarning("[EquipmentSlotDropUI] draggedSlot.Inventory가 null입니다.", this);
+            return;
+        }
+
+        if (draggedSlot.Area == SelectedArea.None || draggedSlot.Index < 0)
+        {
+            Debug.LogWarning("[EquipmentSlotDropUI] 유효하지 않은 인벤토리 슬롯입니다.", this);
+            return;
+        }
+
         string itemId = stack.Item.Id;
 
         Debug.Log("[EquipmentSlotDropUI] 드롭된 itemId: " + itemId, this);
-        Debug.Log("[EquipmentSlotDropUI] equipmentManager null?: " + (equipmentManager == null), this);
 
         if (!IsAllowed(itemId))
         {
@@ -53,12 +76,9 @@ public class EquipmentSlotDropUI : MonoBehaviour, IDropHandler
             return;
         }
 
-        if (draggedSlot.Inventory != null)
-        {
-            draggedSlot.Inventory.RemoveStackAt(draggedSlot.Area, draggedSlot.Index);
-        }
+        draggedSlot.Inventory.RemoveStackAt(draggedSlot.Area, draggedSlot.Index);
 
-        Debug.Log("[EquipmentSlotDropUI] 장착 성공: " + itemId, this);
+        Debug.Log("[EquipmentSlotDropUI] 장착 성공 후 인벤토리에서 제거: " + itemId, this);
     }
 
     private bool IsAllowed(string itemId)

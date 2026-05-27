@@ -123,9 +123,8 @@ public class ItemBoxUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void ClearVisual()
     {
         currentStack = null;
-        isDragging = false;
 
-        if (canvasGroup != null)
+        if (!isDragging && canvasGroup != null)
         {
             canvasGroup.alpha = 1f;
             canvasGroup.blocksRaycasts = true;
@@ -144,7 +143,6 @@ public class ItemBoxUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             countText.enabled = false;
         }
     }
-
     private void OnClick()
     {
         Debug.Log($"클릭된 슬롯: {area}, {index}");
@@ -188,22 +186,26 @@ public class ItemBoxUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!isDragging)
-            return;
+        bool hadOriginalParent = originalParent != null;
 
         isDragging = false;
 
-        canvasGroup.alpha = 1f;
-        canvasGroup.blocksRaycasts = true;
-
-        if (originalParent != null)
+        if (hadOriginalParent)
         {
             transform.SetParent(originalParent, false);
             transform.SetSiblingIndex(originalSiblingIndex);
         }
 
         rectTransform.anchoredPosition = originalPosition;
+        rectTransform.localScale = Vector3.one;
+        rectTransform.localRotation = Quaternion.identity;
 
-        Debug.Log("[ItemBoxUI] 드래그 종료 - 원래 위치 복귀", this);
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 1f;
+            canvasGroup.blocksRaycasts = true;
+        }
+
+        Debug.Log("[ItemBoxUI] 드래그 종료 - 원래 위치 강제 복귀", this);
     }
 }

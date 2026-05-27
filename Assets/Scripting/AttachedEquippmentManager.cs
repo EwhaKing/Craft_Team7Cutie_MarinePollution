@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AttachedEquippmentManager : MonoBehaviour
 {
@@ -7,7 +8,7 @@ public class AttachedEquippmentManager : MonoBehaviour
     {
         public string[] allowedItemIds;
         public GameObject slotObject;
-        public SpriteRenderer iconRenderer;
+        public Image iconImage;
         public string equippedItemId;
     }
 
@@ -54,6 +55,8 @@ public class AttachedEquippmentManager : MonoBehaviour
 
         targetSlot.equippedItemId = itemId;
 
+        Item item = ItemDatabase.GetItemById(itemId);
+
         if (targetSlot.slotObject != null)
         {
             targetSlot.slotObject.SetActive(true);
@@ -62,6 +65,18 @@ public class AttachedEquippmentManager : MonoBehaviour
         else
         {
             Debug.LogWarning("[AttachedEquipment] targetSlot.slotObject가 null입니다.", this);
+        }
+
+        if (targetSlot.iconImage != null)
+        {
+            targetSlot.iconImage.sprite = item != null ? item.Icon : null;
+            targetSlot.iconImage.enabled = item != null && item.Icon != null;
+            targetSlot.iconImage.preserveAspect = true;
+            targetSlot.iconImage.raycastTarget = false;
+        }
+        else
+        {
+            Debug.LogWarning("[AttachedEquipment] targetSlot.iconImage가 null입니다.", this);
         }
 
         Debug.Log("[AttachedEquipment] IsCollectingBagItem?: " + IsCollectingBagItem(itemId), this);
@@ -89,9 +104,10 @@ public class AttachedEquippmentManager : MonoBehaviour
 
         targetSlot.equippedItemId = "";
 
-        if (targetSlot.iconRenderer != null)
+        if (targetSlot.iconImage != null)
         {
-            targetSlot.iconRenderer.sprite = null;
+            targetSlot.iconImage.sprite = null;
+            targetSlot.iconImage.enabled = false;
         }
 
         if (targetSlot.slotObject != null)
@@ -144,10 +160,14 @@ public class AttachedEquippmentManager : MonoBehaviour
     {
         return itemId == "106";
     }
+
     private EquipmentSlot FindSlotByItemId(string itemId)
     {
         foreach (EquipmentSlot slot in equipmentSlots)
         {
+            if (slot == null || slot.allowedItemIds == null)
+                continue;
+
             foreach (string allowedId in slot.allowedItemIds)
             {
                 if (allowedId == itemId)
@@ -164,7 +184,7 @@ public class AttachedEquippmentManager : MonoBehaviour
     {
         foreach (EquipmentSlot slot in equipmentSlots)
         {
-            if (slot.equippedItemId == itemId)
+            if (slot != null && slot.equippedItemId == itemId)
             {
                 return slot;
             }
@@ -172,12 +192,12 @@ public class AttachedEquippmentManager : MonoBehaviour
 
         return null;
     }
-    
+
     public bool IsEquipped(string itemId)
     {
         foreach (EquipmentSlot slot in equipmentSlots)
         {
-            if (slot.equippedItemId == itemId)
+            if (slot != null && slot.equippedItemId == itemId)
             {
                 return true;
             }

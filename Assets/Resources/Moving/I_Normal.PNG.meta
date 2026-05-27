@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: cb0140031bba4ac40b620fd963843a19
+guid: 34c7aa29f1b180544afc0ccea5dc2e44
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4941750550163651437
-    second: NuclearPowerPlant_0
+      213: 7078433627692402436
+    second: I_Normal_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NuclearPowerPlant_0
+      name: I_Normal_0
       rect:
         serializedVersion: 2
-        x: 59
-        y: 50
-        width: 414
-        height: 217
+        x: 824
+        y: 527
+        width: 422
+        height: 994
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 39487e0ae006b6bb0800000000000000
-      internalID: -4941750550163651437
+      spriteID: 40709c891e5ab3260800000000000000
+      internalID: 7078433627692402436
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      NuclearPowerPlant_0: -4941750550163651437
+      I_Normal_0: 7078433627692402436
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
