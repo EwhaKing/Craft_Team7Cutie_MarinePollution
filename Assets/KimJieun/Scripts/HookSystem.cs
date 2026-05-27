@@ -30,13 +30,18 @@ public class HookSystem : MonoBehaviour
     private GameObject caughtTrash;
     private PlayerMovement playerMovement;
 
-    private PlayerItemPicker itemPicker;
+    private InventorySystem inventorySystem;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
-        itemPicker = GetComponent<PlayerItemPicker>();
+        inventorySystem = FindFirstObjectByType<InventorySystem>();
+
+        if (inventorySystem == null)
+        {
+            Debug.LogError("씬 내에서 InventorySystem을 찾을 수 없습니다! Canvas의 인벤토리 UI에 스크립트가 잘 붙어있는지 확인하세요.", this);
+        }
 
         hook.SetActive(false);
     }
@@ -140,15 +145,25 @@ public class HookSystem : MonoBehaviour
 
     void CollectTrash()
     {
-        DroppedItem droppedItem = caughtTrash.GetComponent<DroppedItem>();
+        DroppedTrash droppedTrash = caughtTrash.GetComponent<DroppedTrash>();
 
-        if (droppedItem != null && itemPicker != null)
+        if (droppedTrash != null && inventorySystem != null)
         {
-            bool success = itemPicker.TryPickup(droppedItem.ItemId);
-            
-            if (!success)
+            if (droppedTrash.TrashData != null)
             {
-                Debug.Log("인벤토리가 가득 찼습니다!");
+                string targetId = "";
+
+                if (droppedTrash.TrashData is TrashItem trash)
+                {
+                    targetId = trash.Id;
+                }
+
+                bool success = inventorySystem.AddItemById(targetId);
+
+                if (!success)
+                {
+                    Debug.Log("인벤토리가 가득 찼습니다!");
+                }
             }
         }
 
