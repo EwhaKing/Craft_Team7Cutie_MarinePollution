@@ -2270,37 +2270,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!1 &621705421
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 621705422}
-  m_Layer: 0
-  m_Name: GoToSea
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &621705422
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 621705421}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.51604, y: 0.44622, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &657046038
 GameObject:
   m_ObjectHideFlags: 0
@@ -2895,7 +2864,6 @@ MonoBehaviour:
   topFollowViewportY: 0.66
   clampPlayerXInCamera: 1
   cameraMoveSpeed: 5
-  nextSceneName: UnderwaterScene
 --- !u!4 &775364184
 Transform:
   m_ObjectHideFlags: 0
@@ -6775,4 +6743,3 @@ SceneRoots:
   - {fileID: 864244393}
   - {fileID: 1152667221}
   - {fileID: 237724210}
-  - {fileID: 621705422}

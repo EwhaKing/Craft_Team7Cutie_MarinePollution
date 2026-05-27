@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class GameManager : MonoBehaviour
     public bool clampPlayerXInCamera = true;
     public float cameraMoveSpeed = 5f;
     
+    [Header("Scene Transition")]
+    public string nextSceneName;
     
     private Vector3 playerPosition;
     private Vector3 initialCameraPosition;
@@ -199,6 +202,23 @@ public class GameManager : MonoBehaviour
         {
             rb.linearVelocity = Vector2.zero;
         }
+    }
+
+    public void MoveToScene(string sceneName)
+    {
+        if (string.IsNullOrEmpty(sceneName))
+        {
+            Debug.LogWarning("이동할 씬 이름이 비어 있습니다.");
+            return;
+        }
+
+        SetPlayerControl(false);
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public void MoveToNextScene()
+    {
+        MoveToScene(nextSceneName);
     }
     
     

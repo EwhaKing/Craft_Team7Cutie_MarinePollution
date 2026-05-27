@@ -43,6 +43,19 @@ public static class ItemDatabase
         Register(new OxygenGenerator());
         Register(new WaterTank());
         Register(new OxygenMerger());
+        
+        Register(TrashList.Can);
+        Register(TrashList.Net);
+        Register(TrashList.Chair);
+        Register(TrashList.Desk);
+        Register(TrashList.Clothing);
+        Register(TrashList.Tire);
+        Register(TrashList.Bottle);
+        Register(TrashList.Phone);
+        Register(TrashList.Television);
+        Register(TrashList.Bike);
+        Register(TrashList.Fridge);
+        Register(TrashList.Laptop);
     }
 
     private static void Register(Item item)
