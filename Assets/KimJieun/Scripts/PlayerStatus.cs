@@ -15,7 +15,6 @@ public class PlayerStatus : MonoBehaviour
     public float suffocateDamageRate = 20f;
 
     [Header("Armor Settings")]
-    public bool hasWetsuit = false;
     public float baseDefense = 0f;
     public float wetsuitDefense = 30f;
 
@@ -25,7 +24,9 @@ public class PlayerStatus : MonoBehaviour
     public Image armorIndicator;
 
     [Header("Die Scene Settings")]
-    public string gameOverSceneName = "GameOverScene";
+    public string gameOverSceneName = "GameOverScene"; 
+    
+    [SerializeField] private AttachedEquippmentManager equipmentManager;   
 
     private PlayerMovement playerMovement;
 
@@ -70,7 +71,7 @@ public class PlayerStatus : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        float defense = hasWetsuit ? wetsuitDefense : baseDefense;
+        float defense = equipmentManager.IsEquipped("107") ? wetsuitDefense : baseDefense;
         float actualDamage = Mathf.Max(0, damage - defense);
 
         currentHealth -= actualDamage;
@@ -108,7 +109,7 @@ public class PlayerStatus : MonoBehaviour
 
         if (armorIndicator != null)
         {
-            armorIndicator.gameObject.SetActive(hasWetsuit);
+            armorIndicator.gameObject.SetActive(equipmentManager.IsEquipped("107"));
         }
     }
 }

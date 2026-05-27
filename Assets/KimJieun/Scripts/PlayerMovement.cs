@@ -25,7 +25,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Equipment")]
     public AttachedEquippmentManager equipmentManager;
 
-
     public bool isHookMode
     {
         get {return _isHookMode;}

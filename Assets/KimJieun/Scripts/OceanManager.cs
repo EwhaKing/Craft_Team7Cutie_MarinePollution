@@ -35,6 +35,9 @@ public class OceanManager : MonoBehaviour
     public AudioSource bgmAudioSource;
     public AudioClip oceanBgm;
 
+    [Header("UI Settings")]
+    public GameObject tabPanel;
+
     private int previousStage = -1;
 
     void Awake()
@@ -49,6 +52,33 @@ public class OceanManager : MonoBehaviour
     {
         UpdateOceanTiles();
         PlayBackgroundMusic();
+
+        PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
+        if (playerMovement != null)
+        {
+            playerMovement.Sea = true;
+            playerMovement.Ground = false;
+
+            Debug.Log("플레이어가 바다 모드로 설정되었습니다.");
+        }
+        else
+        {
+            Debug.Log("PlayerMovement 컴포넌트를 찾을 수 없습니다.");
+        }
+
+        if (tabPanel != null) tabPanel.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (tabPanel != null)
+            {
+                bool isActive = tabPanel.activeSelf;
+                tabPanel.SetActive(!isActive);
+            }
+        }
     }
 
     void PlayBackgroundMusic()
