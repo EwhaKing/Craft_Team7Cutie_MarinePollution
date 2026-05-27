@@ -6,15 +6,19 @@ public class InventoryCurrent : MonoBehaviour
     public const int MaxBagSize = 40;
     public const int MaxSlotSize = OriginalSlotSize + MaxBagSize;
 
+    private static ItemStack[] sharedCurrentSlot;
+    private static ItemStack[] sharedOriginalSlot;
+    private static ItemStack[] sharedBag;
+
+    private static bool sharedBagOpen = false;
+
     public ItemStack[] CurrentSlot;
     public ItemStack[] CurrentOriginalSlot;
     public ItemStack[] CurrentBag;
 
-    private bool bagOpen = false;
+    public bool IsBagOpen => sharedBagOpen;
 
-    public bool IsBagOpen => bagOpen;
-
-    public int BagSize => bagOpen ? MaxBagSize : 0;
+    public int BagSize => sharedBagOpen ? MaxBagSize : 0;
 
     public int SlotSize => OriginalSlotSize + BagSize;
 
@@ -22,6 +26,8 @@ public class InventoryCurrent : MonoBehaviour
     {
         EnsureArraySizes();
         SyncCurrentSlot();
+
+        Debug.Log("[InventoryCurrent] static 인벤토리 연결 완료: " + gameObject.name, this);
     }
 
     private void OnValidate()
@@ -31,25 +37,29 @@ public class InventoryCurrent : MonoBehaviour
 
     private void EnsureArraySizes()
     {
-        if (CurrentSlot == null || CurrentSlot.Length != MaxSlotSize)
+        if (sharedCurrentSlot == null || sharedCurrentSlot.Length != MaxSlotSize)
         {
-            CurrentSlot = new ItemStack[MaxSlotSize];
+            sharedCurrentSlot = new ItemStack[MaxSlotSize];
         }
 
-        if (CurrentOriginalSlot == null || CurrentOriginalSlot.Length != OriginalSlotSize)
+        if (sharedOriginalSlot == null || sharedOriginalSlot.Length != OriginalSlotSize)
         {
-            CurrentOriginalSlot = new ItemStack[OriginalSlotSize];
+            sharedOriginalSlot = new ItemStack[OriginalSlotSize];
         }
 
-        if (CurrentBag == null || CurrentBag.Length != MaxBagSize)
+        if (sharedBag == null || sharedBag.Length != MaxBagSize)
         {
-            CurrentBag = new ItemStack[MaxBagSize];
+            sharedBag = new ItemStack[MaxBagSize];
         }
+
+        CurrentSlot = sharedCurrentSlot;
+        CurrentOriginalSlot = sharedOriginalSlot;
+        CurrentBag = sharedBag;
     }
 
     public void OpenBag()
     {
-        bagOpen = true;
+        sharedBagOpen = true;
         SyncCurrentSlot();
 
         Debug.Log("가방이 열렸습니다.", this);
@@ -57,7 +67,7 @@ public class InventoryCurrent : MonoBehaviour
 
     public void CloseBag()
     {
-        bagOpen = false;
+        sharedBagOpen = false;
         SyncCurrentSlot();
 
         Debug.Log("가방이 닫혔습니다.", this);
@@ -77,7 +87,7 @@ public class InventoryCurrent : MonoBehaviour
             CurrentSlot[i] = CurrentOriginalSlot[i];
         }
 
-        if (bagOpen)
+        if (sharedBagOpen)
         {
             for (int i = 0; i < MaxBagSize; i++)
             {

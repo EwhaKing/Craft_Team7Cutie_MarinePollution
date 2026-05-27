@@ -167,12 +167,17 @@ public class ItemBoxUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         originalSiblingIndex = transform.GetSiblingIndex();
         originalPosition = rectTransform.anchoredPosition;
 
+        if (rootCanvas == null)
+            rootCanvas = GetComponentInParent<Canvas>();
+
+        transform.SetParent(rootCanvas.transform, true);
+        transform.SetAsLastSibling();
+
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
 
         Debug.Log("[ItemBoxUI] 드래그 시작: " + currentStack.Item.Id, this);
     }
-
     public void OnDrag(PointerEventData eventData)
     {
         if (!isDragging)
@@ -183,7 +188,6 @@ public class ItemBoxUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         rectTransform.anchoredPosition += eventData.delta / rootCanvas.scaleFactor;
     }
-
     public void OnEndDrag(PointerEventData eventData)
     {
         bool hadOriginalParent = originalParent != null;

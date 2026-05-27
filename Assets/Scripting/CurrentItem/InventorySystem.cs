@@ -38,14 +38,13 @@ public class InventorySystem : MonoBehaviour
 
         if (inventoryCurrent == null)
         {
-            Debug.LogError("InventoryCurrent를 찾지 못했습니다. InventoryCurrent 컴포넌트를 씬에 추가하거나 InventorySystem에 연결하세요.", this);
+            Debug.LogError("InventoryCurrent를 찾지 못했습니다.", this);
         }
         else
         {
             Debug.Log("InventoryCurrent 연결됨: " + inventoryCurrent.name, this);
         }
     }
-
     private void Start()
     {
         RefreshUI();
