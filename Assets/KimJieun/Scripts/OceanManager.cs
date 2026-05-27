@@ -31,6 +31,10 @@ public class OceanManager : MonoBehaviour
     public Sprite normalBackground;
     public Sprite cleanBackground;
 
+    [Header("Audio Settings")]
+    public AudioSource bgmAudioSource;
+    public AudioClip oceanBgm;
+
     private int previousStage = -1;
 
     void Awake()
@@ -44,6 +48,18 @@ public class OceanManager : MonoBehaviour
     void Start()
     {
         UpdateOceanTiles();
+        PlayBackgroundMusic();
+    }
+
+    void PlayBackgroundMusic()
+    {
+        if (bgmAudioSource != null && oceanBgm != null)
+        {
+            bgmAudioSource.clip = oceanBgm;
+            bgmAudioSource.loop = true;
+            bgmAudioSource.playOnAwake = true;
+            bgmAudioSource.Play();
+        }
     }
 
     public void OnTrashCollected()
