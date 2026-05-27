@@ -36,12 +36,6 @@ public class PlayerMovement : MonoBehaviour
             _isHookMode = value;
             if (arm != null) arm.SetActive(_isHookMode);
             if (hook != null) hook.SetActive(_isHookMode);
-
-            if (_isHookMode && animator != null)
-            {
-                animator.Play("HookMode", 0, 0f);
-                currentAnim = "HookMode";
-            }
         }
     }
 
@@ -203,7 +197,6 @@ public class PlayerMovement : MonoBehaviour
     void PlayAnim(string animName)
     {
         if (animator == null) return;
-        if (_isHookMode) return;
         if (currentAnim == animName) return;
 
         animator.Play(animName, 0, 0f);

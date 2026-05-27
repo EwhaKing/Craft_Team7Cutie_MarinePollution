@@ -23,6 +23,14 @@ public class OceanManager : MonoBehaviour
     public TileBase normalOceanTile;
     public TileBase cleanOceanTile;
 
+    [Header("Background Settings")]
+    public SpriteRenderer backgroundRenderer;
+
+    [Header("Pollution Background Sprites")]
+    public Sprite dirtyBackground;
+    public Sprite normalBackground;
+    public Sprite cleanBackground;
+
     private int previousStage = -1;
 
     void Awake()
@@ -92,6 +100,13 @@ public class OceanManager : MonoBehaviour
             {
                 targetTilemap.SetTile(pos, tileToSet);
             }
+        }
+
+        if (backgroundRenderer != null)
+        {
+            if (currentStage == 2) backgroundRenderer.sprite = dirtyBackground;
+            else if (currentStage == 1) backgroundRenderer.sprite = normalBackground;
+            else if (currentStage == 0) backgroundRenderer.sprite = cleanBackground;
         }
     }
 
