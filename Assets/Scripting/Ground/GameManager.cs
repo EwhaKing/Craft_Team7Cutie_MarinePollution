@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,6 +29,16 @@ public class GameManager : MonoBehaviour
     
     [Header("Scene Transition")]
     public string nextSceneName;
+    
+    [Header("Interaction Objects")]
+    public GameObject mergerObject;
+    public GameObject dissemblerObject;
+
+    [Header("Interaction Panels")]
+    public GameObject mergerPanel;
+    public GameObject dissemblerPanel;
+
+    public bool closeOtherPanelOnOpen = true;
     
     private Vector3 playerPosition;
     private Vector3 initialCameraPosition;
@@ -61,6 +72,8 @@ public class GameManager : MonoBehaviour
 
         playerPosition = Player.transform.position;
         currentFloor = CalculateCurrentFloor(playerPosition);
+
+        HandleInteractionClick();
     }
 
     void LateUpdate()
@@ -220,6 +233,71 @@ public class GameManager : MonoBehaviour
     {
         MoveToScene(nextSceneName);
     }
-    
-    
+
+
+
+    void HandleInteractionClick()
+    {
+        // 우클릭
+        if (!Input.GetMouseButtonDown(1)) return;
+
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
+        // 플레이어가 1층일 때만 클릭 가능
+        if (currentFloor != 1) return;
+
+        if (mainCamera == null) return;
+
+        Vector2 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        Collider2D hit = Physics2D.OverlapPoint(mouseWorldPos);
+
+        if (hit == null) return;
+
+        GameObject clickedObject = hit.gameObject;
+
+        if (IsClickedObject(clickedObject, mergerObject, "Merger"))
+        {
+            OpenInteractionPanel(mergerPanel);
+        }
+        else if (IsClickedObject(clickedObject, dissemblerObject, "Dissembler"))
+        {
+            OpenInteractionPanel(dissemblerPanel);
+        }
+    }
+
+    bool IsClickedObject(GameObject clickedObject, GameObject targetObject, string fallbackName)
+    {
+        if (clickedObject == null) return false;
+
+        if (targetObject != null)
+        {
+            if (clickedObject == targetObject) return true;
+            if (clickedObject.transform.IsChildOf(targetObject.transform)) return true;
+        }
+
+        return clickedObject.name == fallbackName;
+    }
+
+    void OpenInteractionPanel(GameObject panel)
+    {
+        if (panel == null)
+        {
+            Debug.LogWarning("열 패널이 연결되어 있지 않습니다.");
+            return;
+        }
+
+        if (closeOtherPanelOnOpen)
+        {
+            if (mergerPanel != null) mergerPanel.SetActive(false);
+            if (dissemblerPanel != null) dissemblerPanel.SetActive(false);
+        }
+
+        panel.SetActive(true);
+    }
+
+
+
 }
