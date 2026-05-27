@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerStatus : MonoBehaviour
 {
@@ -22,6 +23,9 @@ public class PlayerStatus : MonoBehaviour
     public Image healthFill;
     public Image oxygenFill;
     public Image armorIndicator;
+
+    [Header("Die Scene Settings")]
+    public string gameOverSceneName = "GameOverScene";
 
     private PlayerMovement playerMovement;
 
@@ -87,6 +91,7 @@ public class PlayerStatus : MonoBehaviour
     void Die()
     {
         Debug.Log("Player has died.");
+        SceneManager.LoadScene(gameOverSceneName);
     }
 
     void UpdateUI()
