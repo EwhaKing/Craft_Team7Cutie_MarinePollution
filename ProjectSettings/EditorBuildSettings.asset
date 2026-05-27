@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DuringGame/Sea&Ground/Ground.unity
     guid: 41531c886745988488d8aef82debe040
+  - enabled: 1
+    path: Assets/KimJieun/Scenes/UnderwaterScene.unity
+    guid: 6aa6c24bf5e912d438adfb5be77a951a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
