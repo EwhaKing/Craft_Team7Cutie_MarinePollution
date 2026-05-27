@@ -18,6 +18,10 @@ public class ItemBoxUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private Canvas rootCanvas;
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
+
+    private bool isDragging;
+    private Transform originalParent;
+    private int originalSiblingIndex;
     private Vector2 originalPosition;
 
     public InventorySystem Inventory => inventory;
@@ -119,6 +123,13 @@ public class ItemBoxUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void ClearVisual()
     {
         currentStack = null;
+        isDragging = false;
+
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 1f;
+            canvasGroup.blocksRaycasts = true;
+        }
 
         if (itemImage != null)
         {
@@ -147,21 +158,26 @@ public class ItemBoxUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (currentStack == null || currentStack.Item == null || currentStack.Count <= 0)
+        {
+            isDragging = false;
             return;
+        }
 
+        isDragging = true;
+
+        originalParent = transform.parent;
+        originalSiblingIndex = transform.GetSiblingIndex();
         originalPosition = rectTransform.anchoredPosition;
 
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
-
-        transform.SetAsLastSibling();
 
         Debug.Log("[ItemBoxUI] 드래그 시작: " + currentStack.Item.Id, this);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (currentStack == null || currentStack.Item == null || currentStack.Count <= 0)
+        if (!isDragging)
             return;
 
         if (rootCanvas == null)
@@ -172,11 +188,22 @@ public class ItemBoxUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!isDragging)
+            return;
+
+        isDragging = false;
+
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
 
+        if (originalParent != null)
+        {
+            transform.SetParent(originalParent, false);
+            transform.SetSiblingIndex(originalSiblingIndex);
+        }
+
         rectTransform.anchoredPosition = originalPosition;
 
-        Debug.Log("[ItemBoxUI] 드래그 종료", this);
+        Debug.Log("[ItemBoxUI] 드래그 종료 - 원래 위치 복귀", this);
     }
 }
