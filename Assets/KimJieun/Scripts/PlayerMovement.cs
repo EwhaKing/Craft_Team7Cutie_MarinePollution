@@ -222,16 +222,16 @@ public class PlayerMovement : MonoBehaviour
             if (hasWetSuit)
             {
                 if (Mathf.Abs(dir.x) >= Mathf.Abs(dir.y))
-                    animName = dir.x > 0 ? "Swim_Right_Suit" : "Swim_left_Suit";
+                    animName = dir.x > 0 ? "WetSuitRight" : "WetSuitLeft";
                 else
-                    animName = dir.y > 0 ? "Swim_Up_Suit" : "Swim_Down_Suit";
+                    animName = dir.y > 0 ? "WetSuitUp" : "WetSuitDown";
             }
             else
             {
                 if (Mathf.Abs(dir.x) >= Mathf.Abs(dir.y))
-                    animName = dir.x > 0 ? "Swim_R_No" : "Swim_L_No";
+                    animName = dir.x > 0 ? "NoSuitRight" : "NoSuitLeft";
                 else
-                    animName = dir.y > 0 ? "Swimming_Up_No" : "Swimming_Down_No";
+                    animName = dir.y > 0 ? "NoSuitUp" : "NoSuitDown";
             }
         }
         else

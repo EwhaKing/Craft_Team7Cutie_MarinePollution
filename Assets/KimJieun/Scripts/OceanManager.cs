@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class OceanManager : MonoBehaviour
 {
@@ -14,12 +15,27 @@ public class OceanManager : MonoBehaviour
     [Header("Trash Spawn Settings")]
     public bool canSpawnTrash = true;
 
+    [Header("Tilemap Settings")]
+    public Tilemap targetTilemap;
+
+    [Header("Ocean Rule Tiles")]
+    public TileBase dirtyOceanTile;
+    public TileBase normalOceanTile;
+    public TileBase cleanOceanTile;
+
+    private int previousStage = -1;
+
     void Awake()
     {
         if (Instance == null)
             Instance = this;
         else
             Destroy(gameObject);
+    }
+
+    void Start()
+    {
+        UpdateOceanTiles();
     }
 
     public void OnTrashCollected()
@@ -31,6 +47,8 @@ public class OceanManager : MonoBehaviour
         pollution = Mathf.Clamp(pollution, 0, 100);
 
         Debug.Log("현재 오염도 : " + pollution + "%");
+
+        UpdateOceanTiles();
 
         if (pollution <= 0)
         {
@@ -50,6 +68,31 @@ public class OceanManager : MonoBehaviour
             return slowDecreaseAmount;
         else
             return fastDecreaseAmount;
+    }
+
+    void UpdateOceanTiles()
+    {
+        int currentStage = 2;
+        if (pollution > 70) currentStage = 2;
+        else if (pollution > 30) currentStage = 1;
+        else currentStage = 0;
+
+        if (currentStage == previousStage) return;
+        previousStage = currentStage;
+
+        TileBase tileToSet = dirtyOceanTile;
+        if (currentStage == 1) tileToSet = normalOceanTile;
+        else if (currentStage == 0) tileToSet = cleanOceanTile;
+
+        BoundsInt bounds = targetTilemap.cellBounds;
+
+        foreach (var pos in bounds.allPositionsWithin)
+        {
+            if (targetTilemap.HasTile(pos))
+            {
+                targetTilemap.SetTile(pos, tileToSet);
+            }
+        }
     }
 
     void GameClear()
